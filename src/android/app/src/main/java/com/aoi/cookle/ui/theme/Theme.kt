@@ -98,10 +98,10 @@ fun CookleTheme(
 ) {
     //TODO: ダークテーマ対応を行う
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicLightColorScheme(context) else dynamicLightColorScheme(context)
-        }
+        }*/
 
         darkTheme -> lightScheme
         else -> lightScheme
