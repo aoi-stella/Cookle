@@ -67,4 +67,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Lottieライブラリ
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
 }
