@@ -70,4 +70,10 @@ dependencies {
 
     // Lottieライブラリ
     implementation("com.airbnb.android:lottie-compose:6.4.0")
+
+    // ViewModel for jetpack compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    // マルチモジュール
+    implementation(project(":presentation"))
 }
