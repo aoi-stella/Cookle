@@ -15,3 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "cookle"
 include(":app")
+include(":presentation")
+include(":domain")
+include(":data")
+include(":utility")
