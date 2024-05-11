@@ -68,9 +68,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    // Lottieライブラリ
-    implementation("com.airbnb.android:lottie-compose:6.4.0")
-
     // ViewModel for jetpack compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
