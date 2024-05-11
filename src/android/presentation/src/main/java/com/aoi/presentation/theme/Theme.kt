@@ -1,4 +1,4 @@
-package com.aoi.cookle.ui.theme
+package com.aoi.presentation.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.aoi.presentation.theme.ColorFamily
 
 private val darkScheme = darkColorScheme(
     primary = primaryDark,
