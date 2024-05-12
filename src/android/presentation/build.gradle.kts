@@ -77,4 +77,7 @@ dependencies {
     // Navigationライブラリ
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+
+    // マルチモジュール
+    implementation(project(":utility"))
 }
