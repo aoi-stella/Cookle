@@ -42,7 +42,7 @@ class SignInViewModel: ViewModel() {
     fun onEmailChanged(email: String) {
         _emailState.value = email
         validEmail = email.contains("@")
-        _isLoginButtonEnabled.value = validEmail && validPassword
+        validateInputInfo()
     }
 
     /**
@@ -53,7 +53,7 @@ class SignInViewModel: ViewModel() {
     fun onPasswordChanged(password: String) {
         _passwordState.value = password
         validPassword = password.isNotEmpty()
-        _isLoginButtonEnabled.value = validEmail && validPassword
+        validateInputInfo()
     }
 
     /**
@@ -73,5 +73,12 @@ class SignInViewModel: ViewModel() {
             // ログイン情報のバリデーションを行う
             _passLoginValidation.emit(true)
         }
+    }
+
+    /**
+     * 入力された情報が有効かどうかを検証する
+     */
+    private fun validateInputInfo(){
+        _isLoginButtonEnabled.value = validEmail && validPassword
     }
 }
