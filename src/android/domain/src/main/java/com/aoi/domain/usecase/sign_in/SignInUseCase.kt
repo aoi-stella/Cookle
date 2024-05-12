@@ -1,6 +1,8 @@
 package com.aoi.domain.usecase.sign_in
 
 import com.aoi.data.repository.sign_in.SignInRepository
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.tasks.await
 
 /**
  * SignInUseCase
@@ -16,14 +18,13 @@ class SignInUseCase {
      * @param email メールアドレス
      * @param password パスワード
      */
-    fun signIn(email: String, password: String){
-        val result = repository.signIn(email, password)
-        result.addOnSuccessListener {
-            println("")
+    suspend fun signIn(email: String, password: String): Result<FirebaseUser>{
+        return try{
+            val authResult = repository.signIn(email, password).await()
+            Result.success(authResult.user!!)
         }
-
-        result.addOnFailureListener {
-            println("")
+        catch (e: Exception){
+            Result.failure(e)
         }
     }
 }
