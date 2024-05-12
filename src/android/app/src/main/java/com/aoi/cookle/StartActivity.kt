@@ -17,7 +17,7 @@ import com.aoi.presentation.theme.CookleTheme
  * エントリーポイントとなるActivityです。
  */
 @SuppressLint("CustomSplashScreen")
-class EntryActivity : ComponentActivity() {
+class StartActivity : ComponentActivity() {
     /**
      * onCreate
      *
