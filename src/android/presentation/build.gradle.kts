@@ -80,4 +80,5 @@ dependencies {
 
     // マルチモジュール
     implementation(project(":utility"))
+    implementation(project(":domain"))
 }
