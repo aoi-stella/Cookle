@@ -1,6 +1,5 @@
 package com.aoi.cookle
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,7 +15,6 @@ import com.aoi.presentation.theme.CookleTheme
  *
  * エントリーポイントとなるActivityです。
  */
-@SuppressLint("CustomSplashScreen")
 class StartActivity : ComponentActivity() {
     /**
      * onCreate
