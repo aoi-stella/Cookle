@@ -2,14 +2,19 @@ package com.aoi.presentation.authentication.sign_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aoi.domain.usecase.sign_in.SignInUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
  * サインイン画面のViewModel
+ *
+ * @param signInUseCase サインインに関するユースケース
  */
-class SignInViewModel: ViewModel() {
+class SignInViewModel(
+    private val signInUseCase: SignInUseCase = SignInUseCase()
+): ViewModel() {
     // ユーザーが入力したメールアドレス
     private val _emailState = MutableStateFlow("")
     val emailState = _emailState.asStateFlow()
@@ -70,8 +75,8 @@ class SignInViewModel: ViewModel() {
      */
     fun onLoginButtonClicked() {
         viewModelScope.launch {
-            // ログイン情報のバリデーションを行う
-            _passLoginValidation.emit(true)
+            signInUseCase.signIn(emailState.value, passwordState.value)
+            //_passLoginValidation.emit(true)
         }
     }
 
