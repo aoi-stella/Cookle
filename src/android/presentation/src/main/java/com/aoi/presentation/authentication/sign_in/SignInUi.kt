@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aoi.presentation.R
@@ -105,7 +104,8 @@ fun SignInInfo(vm: SignInViewModel) {
     // サインイン情報記憶チェックボックス
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Checkbox(
             checked = isRememberMeChecked,
@@ -113,8 +113,7 @@ fun SignInInfo(vm: SignInViewModel) {
         )
         Spacer(Modifier.size(6.dp))
         Text(
-            text = "ログイン情報を保存する",
-            textAlign = TextAlign.Center,
+            text = "ログイン情報を保存する"
         )
     }
 }
