@@ -1,8 +1,10 @@
 package com.aoi.presentation.authentication.sign_in
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * サインイン画面のViewModel
@@ -20,6 +22,18 @@ class SignInViewModel: ViewModel() {
     private val _isRememberMeChecked = MutableStateFlow(false)
     val isRememberMeChecked = _isRememberMeChecked.asStateFlow()
 
+    // ログインボタンを有効にするかどうか
+    private val _isLoginButtonEnabled = MutableStateFlow(false)
+    val isLoginButtonEnabled = _isLoginButtonEnabled.asStateFlow()
+
+    // ログイン情報のバリデーションが通ったかどうか
+    private val _passLoginValidation = MutableStateFlow(false)
+    val passLoginValidation = _passLoginValidation.asStateFlow()
+
+    // ユーザーが入力したメールアドレスとパスワードが有効かどうか
+    private var validEmail = false
+    private var validPassword = false
+
     /**
      * ユーザーが入力したメールアドレスが変更されたときの処理
      *
@@ -27,6 +41,8 @@ class SignInViewModel: ViewModel() {
      */
     fun onEmailChanged(email: String) {
         _emailState.value = email
+        validEmail = email.contains("@")
+        _isLoginButtonEnabled.value = validEmail && validPassword
     }
 
     /**
@@ -36,6 +52,8 @@ class SignInViewModel: ViewModel() {
      */
     fun onPasswordChanged(password: String) {
         _passwordState.value = password
+        validPassword = password.isNotEmpty()
+        _isLoginButtonEnabled.value = validEmail && validPassword
     }
 
     /**
@@ -45,5 +63,15 @@ class SignInViewModel: ViewModel() {
      */
     fun onRememberMeCheckedChanged(isChecked: Boolean) {
         _isRememberMeChecked.value = isChecked
+    }
+
+    /**
+     * ログインボタンがクリックされたときの処理
+     */
+    fun onLoginButtonClicked() {
+        viewModelScope.launch {
+            // ログイン情報のバリデーションを行う
+            _passLoginValidation.emit(true)
+        }
     }
 }

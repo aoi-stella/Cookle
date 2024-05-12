@@ -59,20 +59,37 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = SignInViewModel()
         Spacer(modifier = Modifier.height(50.dp))
         SignInInfo(vm)
         Spacer(modifier = Modifier.height(32.dp))
-        Button(
-            onClick = { onNavigate() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(horizontal = 16.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = "ログイン",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        LoginButton(vm, onNavigate)
+    }
+}
+
+/**
+ * ログインボタン
+ *
+ * @param vm サインイン画面のViewModel
+ * @param onNavigate サインイン画面から他の画面に遷移するためのコールバック
+ */
+@Composable
+fun LoginButton(vm: SignInViewModel, onNavigate: () -> Unit){
+    val loginButtonEnable by vm.isLoginButtonEnabled.collectAsState()
+    val passLogin by vm.passLoginValidation.collectAsState()
+    if (passLogin) {
+        onNavigate()
+    }
+
+    Button(
+        onClick = { vm.onLoginButtonClicked() },
+        enabled = loginButtonEnable,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            text = "ログイン",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
