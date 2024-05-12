@@ -17,6 +17,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -32,9 +34,10 @@ import com.aoi.utility.ui.user_field.UserInputField
  * サインイン画面のUI
  *
  * @param onNavigate サインイン画面から他の画面に遷移するためのコールバック
+ * @param vm サインイン画面のViewModel
  */
 @Composable
-fun SignInScreen(onNavigate: () -> Unit) {
+fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = SignInViewModel()){
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -55,7 +58,7 @@ fun SignInScreen(onNavigate: () -> Unit) {
             style = MaterialTheme.typography.titleLarge
         )
         Spacer(modifier = Modifier.height(50.dp))
-        SignInInfo()
+        SignInInfo(vm)
         Spacer(modifier = Modifier.height(32.dp))
         Button(
             onClick = { onNavigate() },
@@ -76,22 +79,28 @@ fun SignInScreen(onNavigate: () -> Unit) {
 
 /**
  * サインイン情報入力に関するUI
+ *
+ * @param vm サインイン画面のViewModel
  */
 @Composable
-fun SignInInfo() {
+fun SignInInfo(vm: SignInViewModel) {
+    val emailState by vm.emailState.collectAsState()
+    val passwordState by vm.passwordState.collectAsState()
+    val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
+
     // メールアドレス入力欄
     UserInputField(
         "メールアドレス",
-        "",
+        emailState,
         R.drawable.ic_email
-    ) {}
+    ) { vm.onEmailChanged(it) }
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
     UserInputField(
         "パスワード",
-        "",
+        passwordState,
         R.drawable.ic_key
-    ) {}
+    ) { vm.onPasswordChanged(it) }
     Spacer(modifier = Modifier.height(16.dp))
     // サインイン情報記憶チェックボックス
     Row(
@@ -99,8 +108,8 @@ fun SignInInfo() {
         horizontalArrangement = Arrangement.Center,
     ) {
         Checkbox(
-            checked = true,
-            onCheckedChange = null
+            checked = isRememberMeChecked,
+            onCheckedChange = { vm.onRememberMeCheckedChanged(it) }
         )
         Spacer(Modifier.size(6.dp))
         Text(
@@ -119,5 +128,5 @@ fun SignInInfo() {
 )
 @Composable
 fun SignInScreenPreview() {
-    SignInScreen {}
+    SignInScreen({})
 }
