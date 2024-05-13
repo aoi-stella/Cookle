@@ -1,5 +1,8 @@
 package com.aoi.presentation.navhost
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,11 +28,35 @@ fun AppNavHost(
     navController: NavHostController,
     startDestination: String
 ) {
+    val commonEnterTransition = slideInHorizontally(
+        initialOffsetX = { 1100 },
+        animationSpec = tween(800)
+    )
+
+    val commonExitTransition = slideOutHorizontally(
+        targetOffsetX = { -1100 },
+        animationSpec = tween(800)
+    )
+
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable("splash") { SplashScreen(onNavigate = { navController.navigate("signin") }) }
-        composable("signin") { SignInScreen(onNavigate = { navController.navigate("home") })}
+        composable("splash") {
+            SplashScreen(onNavigate = {
+                navController.navigate("signin") {
+                    popUpTo("splash") { inclusive = true }
+                }
+            })
+        }
+        composable(
+            "signin",
+            enterTransition = { commonEnterTransition },
+            exitTransition = { commonExitTransition }
+        ) {
+            SignInScreen(onNavigate = {
+                navController.navigate("home")
+            })
+        }
     }
 }
