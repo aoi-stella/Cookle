@@ -39,6 +39,14 @@ class SignInViewModel(
     private var validEmail = false
     private var validPassword = false
 
+    // 処理中かどうか
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    // エラーダイアログを出すかどうか
+    private val _showErrorDialog = MutableStateFlow(false)
+    val showErrorDialog = _showErrorDialog.asStateFlow()
+
     /**
      * ユーザーが入力したメールアドレスが変更されたときの処理
      *
@@ -71,12 +79,23 @@ class SignInViewModel(
     }
 
     /**
+     * エラーダイアログが閉じられたときの処理
+     */
+    fun onErrorDialogDismissed() {
+        _showErrorDialog.value = false
+    }
+
+    /**
      * ログインボタンがクリックされたときの処理
      */
     fun onLoginButtonClicked() {
         viewModelScope.launch {
-            signInUseCase.signIn(emailState.value, passwordState.value)
-            //_passLoginValidation.emit(true)
+            _isLoading.value = true
+            val result = signInUseCase.signIn(emailState.value, passwordState.value)
+            if(!result.isSuccess)
+                _showErrorDialog.value = true
+            _isLoading.value = false
+            _passLoginValidation.value = result.isSuccess
         }
     }
 

@@ -3,6 +3,7 @@ package com.aoi.presentation.authentication.sign_in
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,8 +27,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoi.presentation.R
+import com.aoi.utility.ui.dialog.CookleErrorDialog
+import com.aoi.utility.ui.indicator.CookleLoadingIndicator
 import com.aoi.utility.ui.user_field.UserInputField
+
+
 
 /**
  * サインイン画面のUI
@@ -36,30 +42,45 @@ import com.aoi.utility.ui.user_field.UserInputField
  * @param vm サインイン画面のViewModel
  */
 @Composable
-fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = SignInViewModel()){
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_app_image),
-            contentDescription = "My Image",
-            modifier = Modifier.size(200.dp),
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = "こんにちは!\uD83D\uDC4B",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Text(
-            text = "またお会いしましたね！",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Spacer(modifier = Modifier.height(50.dp))
-        SignInInfo(vm)
-        Spacer(modifier = Modifier.height(32.dp))
-        LoginButton(vm, onNavigate)
+fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
+    val isLoading by vm.isLoading.collectAsState()
+    val showErrorDialog by vm.showErrorDialog.collectAsState()
+
+    Box(modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center){
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_app_image),
+                contentDescription = "My Image",
+                modifier = Modifier.size(200.dp),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = "こんにちは!\uD83D\uDC4B",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                text = "またお会いしましたね！",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            SignInInfo(vm)
+            Spacer(modifier = Modifier.height(32.dp))
+            LoginButton(vm, onNavigate)
+        }
+
+        if (isLoading)
+            CookleLoadingIndicator()
+
+        if (showErrorDialog){
+            CookleErrorDialog(
+                onDismissRequest = { vm.onErrorDialogDismissed() },
+                message = "ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。"
+            )
+        }
     }
 }
 
