@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -12,6 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 /**
@@ -27,7 +32,8 @@ fun UserInputField(
     parameterName: String,
     value: String,
     leadingIconId: Int,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    isPasswordField: Boolean = false
 ) {
     OutlinedTextField(
         modifier = Modifier
@@ -50,6 +56,9 @@ fun UserInputField(
                 modifier = Modifier.size(24.dp)
             )
         },
-        label = { Text(parameterName) }
+        label = { Text(parameterName) },
+        visualTransformation = if(isPasswordField) PasswordVisualTransformation() else VisualTransformation.None,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { /* テキストフィールドのフォーカスを外す処理 */ })
     )
 }

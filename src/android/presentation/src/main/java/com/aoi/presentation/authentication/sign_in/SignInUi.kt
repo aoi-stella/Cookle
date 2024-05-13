@@ -129,15 +129,18 @@ fun SignInInfo(vm: SignInViewModel) {
     UserInputField(
         "メールアドレス",
         emailState,
-        R.drawable.ic_email
-    ) { vm.onEmailChanged(it) }
+        R.drawable.ic_email,
+        { vm.onEmailChanged(it) }
+    )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
     UserInputField(
         "パスワード",
         passwordState,
-        R.drawable.ic_key
-    ) { vm.onPasswordChanged(it) }
+        R.drawable.ic_key,
+        { vm.onPasswordChanged(it) },
+        true
+    )
     Spacer(modifier = Modifier.height(16.dp))
     // サインイン情報記憶チェックボックス
     Row(

@@ -79,22 +79,27 @@ fun SignUpInfo(){
     UserInputField(
         "メールアドレスの入力",
         "",
-        R.drawable.ic_email
-    ) {}
+        R.drawable.ic_email,
+        {}
+    )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
     UserInputField(
         "パスワードの入力",
         "",
-        R.drawable.ic_key
-    ) {}
+        R.drawable.ic_key,
+        {},
+        true
+    )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード再入力欄
     UserInputField(
         "パスワードの再確認",
         "",
-        R.drawable.ic_key
-    ) {}
+        R.drawable.ic_key,
+        {},
+        true
+    )
 }
 
 /**
