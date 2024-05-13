@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
  * @param value 入力された値
  * @param leadingIconId 入力欄の先頭に表示するアイコンのリソースID
  * @param onValueChange 入力された値が変更されたときのコールバック
+ * @param isPasswordField パスワード入力欄かどうか
  */
 @Composable
 fun UserInputField(
