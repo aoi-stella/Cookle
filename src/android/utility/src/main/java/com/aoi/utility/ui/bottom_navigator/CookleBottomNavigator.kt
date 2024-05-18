@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
+import com.aoi.utility.entity.ui.NavigationItemUIEntity
 
 /**
  * ボトムナビゲーションバー
@@ -20,7 +21,7 @@ import androidx.navigation.NavController
 @Composable
 fun CookleBottomNavigationBar(
     navController: NavController,
-    items: List<BottomNavigationItem>) {
+    items: List<NavigationItemUIEntity>) {
     val navBackStackEntry by navController.currentBackStackEntryFlow.collectAsState(initial = null)
     val currentRoute = navBackStackEntry?.destination?.route
 
