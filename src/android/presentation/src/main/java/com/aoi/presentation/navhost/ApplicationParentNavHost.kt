@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aoi.presentation.authentication.sign_in.SignInScreen
+import com.aoi.presentation.home.HomeUI
 import com.aoi.presentation.splash.SplashScreen
 
 /**
@@ -57,6 +58,13 @@ fun ApplicationParentNavHost(
             SignInScreen(onNavigate = {
                 navController.navigate("home")
             })
+        }
+        composable(
+            "home",
+            enterTransition = { commonEnterTransition },
+            exitTransition = { commonExitTransition }
+        ) {
+            HomeUI()
         }
     }
 }
