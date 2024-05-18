@@ -1,9 +1,9 @@
-package com.aoi.utility.ui.bottom_navigator
+package com.aoi.utility.entity.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * BottomNavigationItem
+ * ナビゲーションアイテムのUIエンティティ
  *
  * @param route ルート
  * @param screenName 画面名
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @param unselectedIcon 非選択時のアイコン
  * @param hasNews お知らせがあるか
  */
-data class BottomNavigationItem(
+class NavigationItemUIEntity(
     val route: String,
     val screenName: String,
     val selectedIcon: ImageVector,
