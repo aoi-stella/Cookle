@@ -17,14 +17,14 @@ import com.aoi.presentation.splash.SplashScreen
 @Composable
 fun Entry(){
     val navController = rememberNavController()
-    AppNavHost(navController = navController, startDestination = "splash")
+    ApplicationParentNavHost(navController = navController, startDestination = "splash")
 }
 
 /**
- * アプリケーションのナビゲーションを定義
+ * アプリケーション全体のナビゲーションを定義
  */
 @Composable
-fun AppNavHost(
+fun ApplicationParentNavHost(
     navController: NavHostController,
     startDestination: String
 ) {
