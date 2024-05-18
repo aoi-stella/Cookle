@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
  * @param isPasswordField パスワード入力欄かどうか
  */
 @Composable
-fun UserInputField(
+fun CookleUserInputField(
     parameterName: String,
     value: String,
     leadingIconId: Int,

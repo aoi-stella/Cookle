@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aoi.presentation.R
-import com.aoi.utility.ui.user_field.UserInputField
+import com.aoi.utility.ui.user_field.CookleUserInputField
 
 /**
  * サインアップ画面のUI
@@ -76,7 +76,7 @@ fun SignUpScreen(onNavigate: () -> Unit) {
 @Composable
 fun SignUpInfo(){
     // メールアドレス入力欄
-    UserInputField(
+    CookleUserInputField(
         "メールアドレスの入力",
         "",
         R.drawable.ic_email,
@@ -84,7 +84,7 @@ fun SignUpInfo(){
     )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
-    UserInputField(
+    CookleUserInputField(
         "パスワードの入力",
         "",
         R.drawable.ic_key,
@@ -93,7 +93,7 @@ fun SignUpInfo(){
     )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード再入力欄
-    UserInputField(
+    CookleUserInputField(
         "パスワードの再確認",
         "",
         R.drawable.ic_key,

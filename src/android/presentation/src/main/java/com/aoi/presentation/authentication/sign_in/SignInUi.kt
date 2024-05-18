@@ -31,8 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoi.presentation.R
 import com.aoi.utility.ui.dialog.CookleErrorDialog
 import com.aoi.utility.ui.indicator.CookleLoadingIndicator
-import com.aoi.utility.ui.user_field.UserInputField
-
+import com.aoi.utility.ui.user_field.CookleUserInputField
 
 
 /**
@@ -126,7 +125,7 @@ fun SignInInfo(vm: SignInViewModel) {
     val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
 
     // メールアドレス入力欄
-    UserInputField(
+    CookleUserInputField(
         "メールアドレス",
         emailState,
         R.drawable.ic_email,
@@ -134,7 +133,7 @@ fun SignInInfo(vm: SignInViewModel) {
     )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
-    UserInputField(
+    CookleUserInputField(
         "パスワード",
         passwordState,
         R.drawable.ic_key,

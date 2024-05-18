@@ -5,6 +5,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
+/**
+ * エラーダイアログ
+ *
+ * @param onDismissRequest ダイアログを閉じるときの処理
+ * @param title タイトル
+ * @param message メッセージ
+ */
 @Composable
 fun CookleErrorDialog(
     onDismissRequest: () -> Unit,
