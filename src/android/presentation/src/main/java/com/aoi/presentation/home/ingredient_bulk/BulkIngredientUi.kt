@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,7 +27,6 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -247,18 +245,14 @@ fun IngredientCard(
                 TagCard("いいね")
             }
             Spacer(modifier = Modifier.width(8.dp))
-            IconButton(
-                onClick = { /* TODO: Handle add action */ },
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_right),
+                contentDescription = "Add",
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
-                    .wrapContentSize()
+                    .size(36.dp)
                     .background(Color.Transparent)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_right),
-                    contentDescription = "Add",
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
+            )
         }
     }
 }
