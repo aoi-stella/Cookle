@@ -34,6 +34,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,6 +52,9 @@ import com.aoi.presentation.R
  */
 @Composable
 fun BulkIngredientUI(vm: BulkIngredientViewModel = viewModel()) {
+    val selectedCategory = vm.selectedCategory.collectAsState()
+    val categoryList = vm.categoryList.collectAsState()
+
     Scaffold(
         content = {
             paddingValues ->
@@ -61,9 +65,9 @@ fun BulkIngredientUI(vm: BulkIngredientViewModel = viewModel()) {
                     .background(MaterialTheme.colorScheme.background)
             ) {
                 CategoryList(
-                    categoryList = listOf("全て", "label2", "label3"),
-                    selectedCategory = "全て",
-                    onSelected = {}
+                    categoryList = categoryList.value,
+                    selectedCategory = selectedCategory.value,
+                    onSelected = { vm.onChangedCategory(it) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 IngredientList()
