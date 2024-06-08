@@ -50,9 +50,15 @@ import com.aoi.presentation.R
  * 食材一括管理画面
  *
  * @param vm ViewModel
+ * @param onNavigateForIngredientDetail 食材詳細画面への遷移
+ * @param onNavigateForAddIngredient 食材追加画面への遷移
  */
 @Composable
-fun BulkIngredientUI(vm: BulkIngredientViewModel = viewModel()) {
+fun BulkIngredientUI(
+    onNavigateForIngredientDetail: () -> Unit,
+    onNavigateForAddIngredient: () -> Unit,
+    vm: BulkIngredientViewModel = viewModel()
+) {
     val selectedCategory = vm.selectedCategory.collectAsState()
     val categoryList = vm.categoryList.collectAsState()
     val updateIngredient = vm.updateIngredientCategory.collectAsState()
@@ -78,7 +84,7 @@ fun BulkIngredientUI(vm: BulkIngredientViewModel = viewModel()) {
                     onSelected = { vm.onChangedCategory(it) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                IngredientList()
+                IngredientList(onNavigateForIngredientDetail)
             }
         },
         floatingActionButton = {
@@ -152,9 +158,13 @@ fun CategoryList(
 
 /**
  * 食材リスト
+ *
+ * @param onNavigateForIngredientDetail 食材詳細画面への遷移
  */
 @Composable
-fun IngredientList(){
+fun IngredientList(
+    onNavigateForIngredientDetail: () -> Unit
+){
     Text(
         modifier = Modifier.padding(start = 8.dp),
         text = "食材 >",
@@ -165,7 +175,7 @@ fun IngredientList(){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items((1..10).map { "モケラ $it 号" }) { name ->
-            IngredientCard(name)
+            IngredientCard(name, onNavigateForIngredientDetail)
         }
     }
 }
@@ -174,9 +184,12 @@ fun IngredientList(){
  * 食材カード
  *
  * @param name 食材名
+ * @param onNavigateForIngredientDetail 食材詳細画面への遷移
  */
 @Composable
-fun IngredientCard(name: String){
+fun IngredientCard(
+    name: String,
+    onNavigateForIngredientDetail: () -> Unit) {
     Card(
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(
@@ -191,7 +204,8 @@ fun IngredientCard(name: String){
             contentColor = MaterialTheme.colorScheme.onSurface,
             disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
             disabledContentColor = CardDefaults.cardColors().disabledContentColor
-        )
+        ),
+        onClick = onNavigateForIngredientDetail
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -293,5 +307,5 @@ fun TagCard(tag: String) {
 )
 @Composable
 fun Preview() {
-    BulkIngredientUI()
+    BulkIngredientUI({},{})
 }

@@ -34,7 +34,7 @@ fun HomeSetup(vm: HomeViewModel) {
     ) { paddingValues ->
         MainMenuNavHost(
             navController = bottomNavController,
-            startDestination = "add_ingredient",
+            startDestination = "bulk_ingredient",
             modifier = Modifier.padding(paddingValues))
     }
 }

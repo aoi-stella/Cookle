@@ -14,7 +14,7 @@ class NavigationItemsRepository {
     fun getNavigationItems(): List<NavigationItemDomainEntity> {
         return listOf(
             NavigationItemDomainEntity(
-                route = "add_ingredient",
+                route = "bulk_ingredient",
                 screenName = "食材追加",
                 hasNews = false,
             ),
