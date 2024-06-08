@@ -254,7 +254,7 @@ fun TagCard(tag: String) {
         ),
         modifier = Modifier
             .width(80.dp)
-            .wrapContentHeight()
+            .height(24.dp)
             .padding(top = 2.dp)
     ) {
         Box(
