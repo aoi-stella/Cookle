@@ -21,10 +21,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -128,12 +125,13 @@ fun CategoryList(
                     shape = RoundedCornerShape(50),
                     modifier = Modifier
                         .wrapContentWidth()
-                        .wrapContentHeight()
+                        .height(40.dp)
                         .padding(horizontal = 4.dp)
                 ) {
                     Text(
                         it,
-                        style = MaterialTheme.typography.bodyLarge)
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.align(Alignment.CenterVertically))
                 }
             }
         }
@@ -227,12 +225,12 @@ fun IngredientCard(name: String){
                 onClick = { /* TODO: Handle add action */ },
                 modifier = Modifier
                     .wrapContentSize()
-                    .background(MaterialTheme.colorScheme.primary, shape = CircleShape)
+                    .background(Color.Transparent)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Edit,
+                    painter = painterResource(id = R.drawable.ic_arrow_right),
                     contentDescription = "Add",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
