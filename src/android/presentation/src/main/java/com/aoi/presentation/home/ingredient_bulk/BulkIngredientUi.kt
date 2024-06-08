@@ -81,7 +81,7 @@ fun BulkIngredientUI(
                     selectedCategory = selectedCategory.value,
                     onSelected = { vm.onChangedCategory(it) }
                 )
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(50.dp))
                 IngredientList(onNavigateForIngredientDetail)
             }
         },
