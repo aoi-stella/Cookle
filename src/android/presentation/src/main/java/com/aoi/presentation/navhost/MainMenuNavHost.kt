@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.aoi.presentation.home.ingredient_bulk.BulkIngredientUI
 
 /**
  * ホーム画面のナビゲーションを定義
@@ -38,27 +39,19 @@ fun MainMenuNavHost(
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            navController.navigate("add_ingredient") {
-                popUpTo("add_ingredient") { inclusive = true }
-            }
+            BulkIngredientUI()
         }
         composable(
             "ingredient_list",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            navController.navigate("ingredient_list") {
-                popUpTo("ingredient_list") { inclusive = true }
-            }
         }
         composable(
             "settings",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            navController.navigate("settings") {
-                popUpTo("settings") { inclusive = true }
-            }
         }
     }
 }
