@@ -118,8 +118,8 @@ fun CategoryList(
     ) {
         Text(
             modifier = Modifier.padding(start = 8.dp),
-            text = "カテゴリー >",
-            style = MaterialTheme.typography.headlineSmall,
+            text = "カテゴリー",
+            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold)
         Row(
             modifier = Modifier
@@ -141,12 +141,12 @@ fun CategoryList(
                     shape = RoundedCornerShape(50),
                     modifier = Modifier
                         .wrapContentWidth()
-                        .height(40.dp)
+                        .wrapContentHeight()
                         .padding(horizontal = 4.dp)
                 ) {
                     Text(
                         it,
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.align(Alignment.CenterVertically))
                 }
             }
@@ -165,8 +165,8 @@ fun IngredientList(
 ){
     Text(
         modifier = Modifier.padding(start = 8.dp),
-        text = "食材 >",
-        style = MaterialTheme.typography.headlineSmall,
+        text = "食材",
+        style = MaterialTheme.typography.headlineMedium,
         fontWeight = FontWeight.Bold)
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -220,7 +220,7 @@ fun IngredientCard(
                 )
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -231,11 +231,11 @@ fun IngredientCard(
             ) {
                 Text(
                     text = "期限 : 2024/11/22",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface)
                 Text(
                     text = "通知 : 1日前",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface)
                 Row {
                     TagCard("お気に入り")
@@ -284,7 +284,7 @@ fun TagCard(tag: String) {
             Text(
                 text = tag,
                 color = MaterialTheme.colorScheme.onPrimary, // テキストの色
-                style = MaterialTheme.typography.bodySmall, // テキストスタイル
+                style = MaterialTheme.typography.labelMedium, // テキストスタイル
             )
         }
     }
