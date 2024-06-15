@@ -58,12 +58,5 @@ fun BulkIngredientNavHost(
         ) {
             IngredientDetailUI()
         }
-        composable(
-            "ingredient_detail",
-            enterTransition = { commonEnterTransition },
-            exitTransition = { commonExitTransition }
-        ) {
-            // IngredientDetailUIをここに記述
-        }
     }
 }
