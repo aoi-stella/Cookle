@@ -25,7 +25,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -83,17 +82,6 @@ fun BulkIngredientUI(
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 IngredientList(onNavigateForIngredientDetail)
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { println("Clicked!") },
-                containerColor = MaterialTheme.colorScheme.tertiary,
-                contentColor = MaterialTheme.colorScheme.onTertiary) {
-                Image(
-                    painter = painterResource(id = R.drawable.baseline_add_24),
-                    contentDescription = "Add",
-                )
             }
         }
     )
