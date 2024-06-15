@@ -4,6 +4,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,15 +25,27 @@ fun BulkIngredientNavHost(
     startDestination: String,
     modifier: Modifier
 ) {
-    val commonEnterTransition = slideInHorizontally(
+    val slideInScreenEnterTransition = slideInHorizontally(
         initialOffsetX = { 1100 },
         animationSpec = tween(800)
     )
 
-    val commonExitTransition = slideOutHorizontally(
+    val slideOutScreenExitTransition = slideOutHorizontally(
+        targetOffsetX = { 1100 },
+        animationSpec = tween(800)
+    )
+
+    val slideOutScreenEnterTransition = slideInHorizontally(
+        initialOffsetX = { -1100 },
+        animationSpec = tween(800)
+    )
+
+    val slideInScreenExitTransition = slideOutHorizontally(
         targetOffsetX = { -1100 },
         animationSpec = tween(800)
     )
+
+    var currentRoute = remember { "bulk_ingredient" }
 
     NavHost(
         navController = navController,
@@ -41,9 +54,10 @@ fun BulkIngredientNavHost(
     ) {
         composable(
             "bulk_ingredient",
-            enterTransition = { commonEnterTransition },
-            exitTransition = { commonExitTransition }
+            enterTransition = { if(currentRoute == "bulk_ingredient") slideInScreenEnterTransition else slideOutScreenEnterTransition },
+            exitTransition = { slideInScreenExitTransition }
         ) {
+            currentRoute = "bulk_ingredient"
             BulkIngredientUI(
                 onNavigateForAddIngredient = { navController.navigate("bulk_ingredient") },
                 onNavigateForIngredientDetail = { navController.navigate("ingredient_detail"){
@@ -53,9 +67,10 @@ fun BulkIngredientNavHost(
         }
         composable(
             "ingredient_detail",
-            enterTransition = { commonEnterTransition },
-            exitTransition = { commonExitTransition }
+            enterTransition = { slideInScreenEnterTransition },
+            exitTransition = { slideOutScreenExitTransition }
         ) {
+            currentRoute = "ingredient_detail"
             IngredientDetailUI()
         }
     }
