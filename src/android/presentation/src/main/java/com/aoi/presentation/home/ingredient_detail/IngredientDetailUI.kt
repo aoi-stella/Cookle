@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,13 +32,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoi.presentation.R
 
 /**
  * 食材詳細画面
+ *
+ * @param vm ViewModel
  */
 @Composable
-fun IngredientDetailUI() {
+fun IngredientDetailUI(
+    vm: IngredientDetailViewModel = viewModel()
+) {
+    val enabledNotify = vm.enabledNotify.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,7 +60,10 @@ fun IngredientDetailUI() {
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.headlineMedium)
         InfoSpaceDivider()
-        AlertInfoCard()
+        AlertInfoCard(
+            isSwitchEnabled = enabledNotify.value,
+            onChangedSwitch = { vm.onChangedEnabledNotify(it) }
+        )
         InfoSpaceDivider()
         IngredientDetail()
     }
@@ -69,9 +79,15 @@ fun InfoSpaceDivider(){
 
 /**
  * アラートカード
+ *
+ * @param isSwitchEnabled スイッチの有効無効
+ * @param onChangedSwitch スイッチの変更時の処理
  */
 @Composable
-fun AlertInfoCard() {
+fun AlertInfoCard(
+    isSwitchEnabled: Boolean,
+    onChangedSwitch: (Boolean) -> Unit
+) {
     Text(
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Left,
@@ -119,8 +135,8 @@ fun AlertInfoCard() {
                         modifier = Modifier.weight(1f)
                     )
                     Switch(
-                        checked = false,
-                        onCheckedChange = {},
+                        checked = isSwitchEnabled,
+                        onCheckedChange = { onChangedSwitch(it) },
                         modifier = Modifier.weight(1f))
                 }
                 Row(modifier = Modifier
