@@ -1,6 +1,11 @@
 package com.aoi.presentation.home.ingredient_detail
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.res.Configuration
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoi.presentation.R
+import java.util.Calendar
 
 /**
  * 食材詳細画面
@@ -45,6 +52,18 @@ fun IngredientDetailUI(
     vm: IngredientDetailViewModel = viewModel()
 ) {
     val enabledNotify = vm.enabledNotify.collectAsState()
+    val showDateDialog = vm.showDateDialog.collectAsState()
+    val showTimeDialog =vm.showTimeDialog.collectAsState()
+
+    NotifyDateTimePicker(
+        showDateDialog = showDateDialog.value,
+        showTimeDialog = showTimeDialog.value,
+        onDateSet = { year, month, day -> vm.onChangeNotifyDate(year, month, day) },
+        onDateReset = { vm.resetDatePickerVisibleState() },
+        onTimeSet = { hour, minute -> vm.onChangeNotifyTime(hour, minute) },
+        onTimeReset = { vm.resetTimePickerVisibleState() }
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,7 +81,8 @@ fun IngredientDetailUI(
         InfoSpaceDivider()
         AlertInfoCard(
             isSwitchEnabled = enabledNotify.value,
-            onChangedSwitch = { vm.onChangedEnabledNotify(it) }
+            onChangedSwitch = { vm.onChangedEnabledNotify(it) },
+            onChangedShowDialog = { vm.onChangeDateDialogVisibleState(it) }
         )
         InfoSpaceDivider()
         IngredientDetail()
@@ -86,7 +106,8 @@ fun InfoSpaceDivider(){
 @Composable
 fun AlertInfoCard(
     isSwitchEnabled: Boolean,
-    onChangedSwitch: (Boolean) -> Unit
+    onChangedSwitch: (Boolean) -> Unit,
+    onChangedShowDialog: (Boolean) -> Unit
 ) {
     Text(
         modifier = Modifier.fillMaxWidth(),
@@ -161,7 +182,7 @@ fun AlertInfoCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    onClick = {},
+                    onClick = { onChangedShowDialog(true) },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary)
@@ -217,6 +238,78 @@ fun DetailInfoItem(itemName: String, itemValue: String){
             .fillMaxWidth()
             .padding(bottom = 16.dp)
     )
+}
+
+@Composable
+fun NotifyDateTimePicker(
+    showDateDialog: Boolean,
+    showTimeDialog: Boolean,
+    onDateSet: (year: Int, month: Int, day: Int) -> Unit,
+    onTimeSet: (hour: Int, minute: Int) -> Unit,
+    onDateReset: () -> Unit,
+    onTimeReset: () -> Unit
+){
+    onDateReset()
+    if (showDateDialog){
+        DatePicker(onDateSet = onDateSet)
+    }
+
+    onTimeReset()
+    if (showTimeDialog){
+        TimePicker(onTimeSet = onTimeSet)
+    }
+}
+
+/**
+ * DatePicker
+ *
+ * 日付ピッカーを表示する
+ *
+ * @param context コンテキスト
+ * @param onDateSet 日付設定時の処理
+ */
+@Composable
+fun DatePicker(
+    context: Context = LocalContext.current,
+    onDateSet: (year: Int, month: Int, day: Int) -> Unit
+){
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    DatePickerDialog(
+        context,
+        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+            onDateSet(selectedYear, selectedMonth, selectedDay)
+        }, year, month, day
+    ).show()
+
+}
+
+/**
+ * TimePicker
+ *
+ * 時刻設ピッカーを表示する
+ *
+ * @param context コンテキスト
+ * @param onTimeSet 時刻設定時の処理
+ */
+@Composable
+fun TimePicker(
+    context: Context = LocalContext.current,
+    onTimeSet: (hour: Int, minute: Int) -> Unit
+){
+    val calendar = Calendar.getInstance()
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+
+    TimePickerDialog(
+        context,
+        { _: TimePicker, selectedHour: Int, selectedMinute: Int ->
+            onTimeSet(selectedHour, selectedMinute)
+        }, hour, minute, true
+    ).show()
 }
 
 /**
