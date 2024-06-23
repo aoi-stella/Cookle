@@ -75,6 +75,7 @@ class IngredientDetailViewModel: ViewModel() {
     fun onChangeNotifyTime(hour: Int, minute: Int){
         _notifyTime.value = "$hour:$minute"
         _showTimeDialog.value = false
+        _enabledNotify.value = true
     }
 
     /**
