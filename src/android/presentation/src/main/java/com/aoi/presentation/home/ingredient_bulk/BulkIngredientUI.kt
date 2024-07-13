@@ -29,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,6 +68,7 @@ fun BulkIngredientUI(
     }
 
     Scaffold(
+        topBar = { Header() },
         content = {
             paddingValues ->
             Column(
@@ -278,6 +280,26 @@ fun TagCard(tag: String) {
     }
 }
 
+@Composable
+fun Header(){
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        color = MaterialTheme.colorScheme.background,
+        shadowElevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(start = 12.dp, top = 36.dp, end = 12.dp, bottom = 12.dp)
+        ) {
+            Text(
+                text = "リスト",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
 
 /**
  * プレビュー
