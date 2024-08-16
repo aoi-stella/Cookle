@@ -43,12 +43,7 @@ fun CookleUserInputField(
             .padding(horizontal = 16.dp),
         value = value,
         onValueChange = { onValueChange(it) },
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedTextColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-            unfocusedLeadingIconColor = MaterialTheme.colorScheme.primary
-        ),
+        colors = OutlinedTextFieldDefaults.colors(),
         leadingIcon = {
             Icon(
                 painter = painterResource(leadingIconId),

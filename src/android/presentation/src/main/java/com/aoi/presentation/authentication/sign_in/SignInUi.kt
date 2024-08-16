@@ -1,7 +1,6 @@
 package com.aoi.presentation.authentication.sign_in
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,8 +24,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,42 +45,37 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
     val isLoading by vm.isLoading.collectAsState()
     val showErrorDialog by vm.showErrorDialog.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center){
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_app_image),
-                contentDescription = "My Image",
-                modifier = Modifier.size(200.dp),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = "こんにちは!\uD83D\uDC4B",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = "またお会いしましたね！",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Spacer(modifier = Modifier.height(50.dp))
-            SignInInfo(vm)
-            Spacer(modifier = Modifier.height(32.dp))
-            LoginButton(vm, onNavigate)
-        }
+    Scaffold(
+        topBar = { Header() },
+        content = { paddingValues ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp),
+                contentAlignment = Alignment.TopCenter  // Alignment.Center から変更
+            ) {
+                Column(
+                    modifier = Modifier.padding(paddingValues), // paddingValues を適用
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    SignInInfo(vm)
+                    Spacer(modifier = Modifier.height(32.dp))
+                    LoginButton(vm, onNavigate)
+                }
 
-        if (isLoading)
-            CookleLoadingIndicator()
+                if (isLoading)
+                    CookleLoadingIndicator()
 
-        if (showErrorDialog){
-            CookleErrorDialog(
-                onDismissRequest = { vm.onErrorDialogDismissed() },
-                message = "ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。"
-            )
+                if (showErrorDialog) {
+                    CookleErrorDialog(
+                        onDismissRequest = { vm.onErrorDialogDismissed() },
+                        message = "ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。"
+                    )
+                }
+            }
         }
-    }
+    )
 }
 
 /**
@@ -158,6 +152,28 @@ fun SignInInfo(vm: SignInViewModel) {
         Text(
             text = "ログイン情報を保存する"
         )
+    }
+}
+
+/**
+ * ヘッダー
+ */
+@Composable
+fun Header(){
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 8.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(start = 12.dp, top = 36.dp, end = 12.dp, bottom = 12.dp)
+        ) {
+            Text(
+                text = "会員ログイン",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
 
