@@ -44,6 +44,14 @@ import com.aoi.utility.ui.user_field.CookleUserInputField
 fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
     val isLoading by vm.isLoading.collectAsState()
     val showErrorDialog by vm.showErrorDialog.collectAsState()
+    val emailAddress by vm.emailAddress.collectAsState()
+    val password by vm.password.collectAsState()
+    val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
+    val isLoginButtonEnable by vm.isLoginButtonEnabled.collectAsState()
+
+    LaunchedEffect(Unit){
+        vm.onNavigate = onNavigate
+    }
 
     Scaffold(
         topBar = { Header() },
@@ -52,16 +60,25 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 16.dp),
-                contentAlignment = Alignment.TopCenter  // Alignment.Center から変更
+                contentAlignment = Alignment.TopCenter
             ) {
                 Column(
-                    modifier = Modifier.padding(paddingValues), // paddingValues を適用
+                    modifier = Modifier.padding(paddingValues),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    SignInInfo(vm)
+                    SignInInfo(
+                        emailAddress,
+                        password,
+                        isRememberMeChecked,
+                        { vm.onEmailChanged(it) },
+                        { vm.onPasswordChanged(it) },
+                        { vm.onRememberMeCheckedChanged(it) })
                     Spacer(modifier = Modifier.height(32.dp))
-                    LoginButton(vm, onNavigate)
+                    LoginButton(
+                        isLoginButtonEnabled = isLoginButtonEnable,
+                        onLoginButtonClicked = { vm.onLoginButtonClicked() }
+                    )
                 }
 
                 if (isLoading)
@@ -81,22 +98,17 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
 /**
  * ログインボタン
  *
- * @param vm サインイン画面のViewModel
- * @param onNavigate サインイン画面から他の画面に遷移するためのコールバック
+ * @param isLoginButtonEnabled ログインボタンが有効かどうか
+ * @param onLoginButtonClicked ログインボタンがクリックされた時のコールバック
  */
 @Composable
-fun LoginButton(vm: SignInViewModel, onNavigate: () -> Unit){
-    val loginButtonEnable by vm.isLoginButtonEnabled.collectAsState()
-    val passLogin by vm.passLoginValidation.collectAsState()
-    LaunchedEffect(key1 = passLogin){
-        if (passLogin) {
-            onNavigate()
-        }
-    }
+fun LoginButton(
+    isLoginButtonEnabled: Boolean,
+    onLoginButtonClicked: () -> Unit){
 
     Button(
-        onClick = { vm.onLoginButtonClicked() },
-        enabled = loginButtonEnable,
+        onClick = { onLoginButtonClicked() },
+        enabled = isLoginButtonEnabled,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
@@ -113,28 +125,35 @@ fun LoginButton(vm: SignInViewModel, onNavigate: () -> Unit){
 /**
  * サインイン情報入力に関するUI
  *
- * @param vm サインイン画面のViewModel
+ * @param emailAddress メールアドレス
+ * @param password パスワード
+ * @param isRememberMeChecked ログイン情報を保存するかどうか
+ * @param onEmailChanged メールアドレスが変更された時のコールバック
+ * @param onPasswordChanged パスワードが変更された時のコールバック
+ * @param onRememberMeCheckedChanged ログイン情報を保存するかどうかが変更された時のコールバック
  */
 @Composable
-fun SignInInfo(vm: SignInViewModel) {
-    val emailState by vm.emailState.collectAsState()
-    val passwordState by vm.passwordState.collectAsState()
-    val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
-
+fun SignInInfo(
+    emailAddress: String,
+    password: String,
+    isRememberMeChecked: Boolean,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onRememberMeCheckedChanged: (Boolean) -> Unit){
     // メールアドレス入力欄
     CookleUserInputField(
         "メールアドレス",
-        emailState,
+        emailAddress,
         R.drawable.ic_email,
-        { vm.onEmailChanged(it) }
+        { onEmailChanged(it) }
     )
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
     CookleUserInputField(
         "パスワード",
-        passwordState,
+        password,
         R.drawable.ic_key,
-        { vm.onPasswordChanged(it) },
+        { onPasswordChanged(it) },
         true
     )
     Spacer(modifier = Modifier.height(16.dp))
@@ -146,7 +165,7 @@ fun SignInInfo(vm: SignInViewModel) {
     ) {
         Checkbox(
             checked = isRememberMeChecked,
-            onCheckedChange = { vm.onRememberMeCheckedChanged(it) }
+            onCheckedChange = { onRememberMeCheckedChanged(it) }
         )
         Spacer(Modifier.size(6.dp))
         Text(
