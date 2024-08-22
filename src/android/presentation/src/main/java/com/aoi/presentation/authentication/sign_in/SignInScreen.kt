@@ -33,11 +33,10 @@ import com.aoi.utility.ui.dialog.CookleErrorDialog
 import com.aoi.utility.ui.indicator.CookleLoadingIndicator
 import com.aoi.utility.ui.user_field.CookleUserInputField
 
-
 /**
- * サインイン画面のUI
+ * サインイン画面
  *
- * @param onNavigate サインイン画面から他の画面に遷移するためのコールバック
+ * @param onNavigate 画面遷移のコールバック
  * @param vm サインイン画面のViewModel
  */
 @Composable
@@ -48,11 +47,36 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
     val password by vm.password.collectAsState()
     val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
     val isLoginButtonEnable by vm.isLoginButtonEnabled.collectAsState()
+    val signInScreenState = SignInScreenState(
+        isLoading,
+        showErrorDialog,
+        emailAddress,
+        password,
+        isRememberMeChecked,
+        isLoginButtonEnable
+    )
 
+    val signInScreenEvent = SignInScreenEvent(
+        { vm.onEmailChanged(it) },
+        { vm.onPasswordChanged(it) },
+        { vm.onRememberMeCheckedChanged(it) },
+        { vm.onLoginButtonClicked() },
+        { vm.onErrorDialogDismissed() }
+    )
     LaunchedEffect(Unit){
         vm.onNavigate = onNavigate
     }
 
+    SignInScreen(signInScreenState, signInScreenEvent)
+}
+/**
+ * サインイン画面のUI
+ *
+ * @param signInScreenState サインイン画面の状態
+ * @param signInScreenEvent サインイン画面のイベント処理
+ */
+@Composable
+fun SignInScreen(signInScreenState: SignInScreenState, signInScreenEvent: SignInScreenEvent){
     Scaffold(
         topBar = { Header() },
         content = { paddingValues ->
@@ -68,25 +92,25 @@ fun SignInScreen(onNavigate: () -> Unit, vm: SignInViewModel = viewModel()){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     SignInInfo(
-                        emailAddress,
-                        password,
-                        isRememberMeChecked,
-                        { vm.onEmailChanged(it) },
-                        { vm.onPasswordChanged(it) },
-                        { vm.onRememberMeCheckedChanged(it) })
+                        signInScreenState.emailAddress,
+                        signInScreenState.password,
+                        signInScreenState.isRememberMeChecked,
+                        { signInScreenEvent.onEmailChanged(it) },
+                        { signInScreenEvent.onPasswordChanged(it) },
+                        { signInScreenEvent.onRememberMeCheckedChanged(it) })
                     Spacer(modifier = Modifier.height(32.dp))
                     LoginButton(
-                        isLoginButtonEnabled = isLoginButtonEnable,
-                        onLoginButtonClicked = { vm.onLoginButtonClicked() }
+                        isLoginButtonEnabled = signInScreenState.isLoginButtonEnabled,
+                        onLoginButtonClicked = { signInScreenEvent.onLoginButtonClicked() }
                     )
                 }
 
-                if (isLoading)
+                if (signInScreenState.isLoading)
                     CookleLoadingIndicator()
 
-                if (showErrorDialog) {
+                if (signInScreenState.showErrorDialog) {
                     CookleErrorDialog(
-                        onDismissRequest = { vm.onErrorDialogDismissed() },
+                        onDismissRequest = { signInScreenEvent.onErrorDialogDismissed() },
                         message = "ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。"
                     )
                 }
@@ -205,5 +229,20 @@ fun Header(){
 )
 @Composable
 fun SignInScreenPreview() {
-    SignInScreen({})
+    val signInScreenState = SignInScreenState(
+        isLoading = false,
+        showErrorDialog = false,
+        emailAddress =  "",
+        password = "",
+        isRememberMeChecked = false,
+        isLoginButtonEnabled = false
+    )
+    val signInScreenEvent = SignInScreenEvent(
+        onEmailChanged = {},
+        onPasswordChanged = {},
+        onRememberMeCheckedChanged = {},
+        onLoginButtonClicked = {},
+        onErrorDialogDismissed = {}
+    )
+    SignInScreen(signInScreenState, signInScreenEvent)
 }
