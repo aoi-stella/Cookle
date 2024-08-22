@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--サインイン画面-->
+    <string name="sign_in_text_header">会員ログイン</string>
+    <string name="sign_in_text_login">ログイン</string>
+    <string name="sign_in_outlined_text_field_mail_address">メールアドレス</string>
+    <string name="sign_in_outlined_text_field_password">パスワード</string>
+    <string name="sign_in_checkbox_save_login_information">ログイン情報を保存する</string>
+    <string name="sign_in_dialog_failed_to_login">ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。</string>
+</resources>

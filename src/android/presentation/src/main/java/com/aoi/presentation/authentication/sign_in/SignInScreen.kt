@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -111,7 +112,7 @@ fun SignInScreen(signInScreenState: SignInScreenState, signInScreenEvent: SignIn
                 if (signInScreenState.showErrorDialog) {
                     CookleErrorDialog(
                         onDismissRequest = { signInScreenEvent.onErrorDialogDismissed() },
-                        message = "ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。"
+                        message = stringResource(id = R.string.sign_in_dialog_failed_to_login)
                     )
                 }
             }
@@ -139,7 +140,7 @@ fun LoginButton(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = "ログイン",
+            text = stringResource(id = R.string.sign_in_text_login),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
@@ -166,7 +167,7 @@ fun SignInInfo(
     onRememberMeCheckedChanged: (Boolean) -> Unit){
     // メールアドレス入力欄
     CookleUserInputField(
-        "メールアドレス",
+        stringResource(id = R.string.sign_in_outlined_text_field_mail_address),
         emailAddress,
         R.drawable.ic_email,
         { onEmailChanged(it) }
@@ -174,7 +175,7 @@ fun SignInInfo(
     Spacer(modifier = Modifier.height(16.dp))
     // パスワード入力欄
     CookleUserInputField(
-        "パスワード",
+        stringResource(id = R.string.sign_in_outlined_text_field_password),
         password,
         R.drawable.ic_key,
         { onPasswordChanged(it) },
@@ -193,7 +194,7 @@ fun SignInInfo(
         )
         Spacer(Modifier.size(6.dp))
         Text(
-            text = "ログイン情報を保存する"
+            text = stringResource(id = R.string.sign_in_checkbox_save_login_information)
         )
     }
 }
@@ -212,7 +213,7 @@ fun Header(){
             modifier = Modifier.padding(start = 12.dp, top = 36.dp, end = 12.dp, bottom = 12.dp)
         ) {
             Text(
-                text = "会員ログイン",
+                text = stringResource(id = R.string.sign_in_text_header),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -225,7 +226,8 @@ fun Header(){
  */
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    apiLevel = 33
 )
 @Composable
 fun SignInScreenPreview() {
