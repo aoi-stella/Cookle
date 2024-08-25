@@ -3,6 +3,7 @@ package com.aoi.presentation.sign_in
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aoi.domain.usecase.authentication.SignInUseCase
+import com.aoi.domain.usecase.getStoredUserInformation.GetUserLoginInformationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
  * @param signInUseCase サインインに関するユースケース
  */
 class SignInViewModel(
-    private val signInUseCase: SignInUseCase = SignInUseCase()
+    private val signInUseCase: SignInUseCase = SignInUseCase(),
+    private val getUserLoginInformationUseCase: GetUserLoginInformationUseCase = GetUserLoginInformationUseCase()
 ): ViewModel() {
     // ユーザーが入力したメールアドレス
     private val _emailAddress = MutableStateFlow("")
@@ -45,6 +47,10 @@ class SignInViewModel(
 
     // 画面遷移のコールバック
     var onNavigate: (() -> Unit)? = null
+
+    init {
+        setPreviousUserLoginInformation()
+    }
 
     /**
      * ユーザーが入力したメールアドレスが変更されたときの処理
@@ -106,6 +112,22 @@ class SignInViewModel(
      */
     private fun validateInputInfo(){
         _isLoginButtonEnabled.value = validEmail && validPassword
+    }
+
+    /**
+     * setPreviousUserLoginInformation
+     *
+     * 以前にログイン情報を保存していた場合、その情報をセットする
+     */
+    private fun setPreviousUserLoginInformation(){
+        val userLoginInformation = getUserLoginInformationUseCase.getUserLoginInformation()
+        val isEmptyInformation = userLoginInformation.first.isNullOrEmpty() && userLoginInformation.second.isNullOrEmpty()
+        if(isEmptyInformation){
+            return
+        }
+
+        _emailAddress.value = userLoginInformation.first
+        _password.value = userLoginInformation.second
     }
 
     /**
