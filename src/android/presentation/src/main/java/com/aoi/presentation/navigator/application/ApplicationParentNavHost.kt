@@ -8,8 +8,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aoi.presentation.sign_in.SignInScreen
 import com.aoi.presentation.home.HomeUI
+import com.aoi.presentation.sign_in.SignInScreen
+import com.aoi.presentation.sign_up.SignUpScreen
 import com.aoi.presentation.splash.SplashScreen
 
 /**
@@ -66,7 +67,11 @@ fun ApplicationParentNavHost(
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            HomeUI()
+            SignUpScreen(onNavigate = {
+                navController.navigate(ApplicationParentNavHostDestination.HOME) {
+                    popUpTo(ApplicationParentNavHostDestination.SIGN_UP) { inclusive = true }
+                }
+            })
         }
         composable(
             ApplicationParentNavHostDestination.HOME,

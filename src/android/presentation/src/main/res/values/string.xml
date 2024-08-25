@@ -7,4 +7,12 @@
     <string name="sign_in_outlined_text_field_password">パスワード</string>
     <string name="sign_in_checkbox_save_login_information">ログイン情報を保存する</string>
     <string name="sign_in_dialog_failed_to_login">ログインに失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。</string>
+
+    <!--サインアップ画面-->
+<string name="sign_up_text_header">会員登録</string>
+    <string name="sign_up_text_sign_up">登録</string>
+    <string name="sign_up_outlined_text_field_mail_address">メールアドレス</string>
+    <string name="sign_up_outlined_text_field_password">パスワード</string>
+    <string name="sign_up_checkbox_save_login_information">ログイン情報を保存する</string>
+    <string name="sign_up_dialog_failed_to_sign_up">登録に失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。</string>
 </resources>
