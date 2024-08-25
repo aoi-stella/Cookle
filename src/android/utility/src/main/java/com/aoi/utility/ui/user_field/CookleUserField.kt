@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -34,8 +35,21 @@ fun CookleUserInputField(
     value: String,
     leadingIconId: Int,
     onValueChange: (String) -> Unit,
-    isPasswordField: Boolean = false
+    isPasswordField: Boolean = false,
 ) {
+    val keyboardOptions = if(isPasswordField){
+        KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password)
+    }else{
+        KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text)
+    }
+
+    val visualTransformation = if(isPasswordField){
+        PasswordVisualTransformation()
+    }
+    else{
+        VisualTransformation.None
+    }
+
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,8 +67,8 @@ fun CookleUserInputField(
             )
         },
         label = { Text(parameterName) },
-        visualTransformation = if(isPasswordField) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
         keyboardActions = KeyboardActions(onDone = { /* テキストフィールドのフォーカスを外す処理 */ })
     )
 }

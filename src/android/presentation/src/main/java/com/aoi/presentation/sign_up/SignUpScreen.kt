@@ -48,13 +48,19 @@ fun SignUpScreen(onNavigate: () -> Unit, vm: SignUpViewModel = viewModel()){
     val password by vm.password.collectAsState()
     val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
     val isSignUpButtonEnable by vm.isSignUpButtonEnabled.collectAsState()
+    val isFulFilledPasswordRequirements1 by vm.isFulFilledPasswordRequirements1.collectAsState()
+    val isFulFilledPasswordRequirements2 by vm.isFulFilledPasswordRequirements2.collectAsState()
+    val isFulFilledPasswordRequirements3 by vm.isFulFilledPasswordRequirements3.collectAsState()
     val signUpScreenState = SignUpScreenState(
         isLoading,
         showErrorDialog,
         emailAddress,
         password,
         isRememberMeChecked,
-        isSignUpButtonEnable
+        isSignUpButtonEnable,
+        isFulFilledPasswordRequirements1,
+        isFulFilledPasswordRequirements2,
+        isFulFilledPasswordRequirements3,
     )
 
     val signUpScreenEvent = SignUpScreenEvent(
@@ -77,7 +83,7 @@ fun SignUpScreen(onNavigate: () -> Unit, vm: SignUpViewModel = viewModel()){
  * @param signUpScreenEvent サインアップ画面のイベント処理
  */
 @Composable
-fun SignUpScreen(signUpScreenState: SignUpScreenState, signUpScreenEvent: SignUpScreenEvent){
+fun SignUpScreen(signUpScreenState: SignUpScreenState,signUpScreenEvent: SignUpScreenEvent){
     Scaffold(
         topBar = { Header() },
         content = { paddingValues ->
@@ -93,12 +99,15 @@ fun SignUpScreen(signUpScreenState: SignUpScreenState, signUpScreenEvent: SignUp
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     SignUpInfo(
-                        signUpScreenState.emailAddress,
-                        signUpScreenState.password,
-                        signUpScreenState.isRememberMeChecked,
-                        { signUpScreenEvent.onEmailChanged(it) },
-                        { signUpScreenEvent.onPasswordChanged(it) },
-                        { signUpScreenEvent.onRememberMeCheckedChanged(it) })
+                        emailAddress =  signUpScreenState.emailAddress,
+                        password =  signUpScreenState.password,
+                        isRememberMeChecked =  signUpScreenState.isRememberMeChecked,
+                        onEmailChanged =  { signUpScreenEvent.onEmailChanged(it) },
+                        onPasswordChanged =  { signUpScreenEvent.onPasswordChanged(it) },
+                        onRememberMeCheckedChanged =  { signUpScreenEvent.onRememberMeCheckedChanged(it)},
+                        isFulFilledPasswordRequirements1 = signUpScreenState.isFulFilledPasswordRequirements1,
+                        isFulFilledPasswordRequirements2 = signUpScreenState.isFulFilledPasswordRequirements2,
+                        isFulFilledPasswordRequirements3 = signUpScreenState.isFulFilledPasswordRequirements3)
                     Spacer(modifier = Modifier.height(32.dp))
                     SignUpButton(
                         isSignUpButtonEnabled = signUpScreenState.isSignUpButtonEnabled,
@@ -153,6 +162,9 @@ fun SignUpButton(
  * @param emailAddress メールアドレス
  * @param password パスワード
  * @param isRememberMeChecked ログイン情報を保存するかどうか
+ * @param isFulFilledPasswordRequirements1 パスワードの条件1(文字数制限)を満たしているかどうか
+ * @param isFulFilledPasswordRequirements2 パスワードの条件2(小文字を含む)を満たしているかどうか
+ * @param isFulFilledPasswordRequirements3 パスワードの条件3(大文字を含む)を満たしているかどうか
  * @param onEmailChanged メールアドレスが変更された時のコールバック
  * @param onPasswordChanged パスワードが変更された時のコールバック
  * @param onRememberMeCheckedChanged ログイン情報を保存するかどうかが変更された時のコールバック
@@ -162,6 +174,9 @@ fun SignUpInfo(
     emailAddress: String,
     password: String,
     isRememberMeChecked: Boolean,
+    isFulFilledPasswordRequirements1: Boolean,
+    isFulFilledPasswordRequirements2: Boolean,
+    isFulFilledPasswordRequirements3: Boolean,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onRememberMeCheckedChanged: (Boolean) -> Unit){
@@ -182,7 +197,7 @@ fun SignUpInfo(
         true
     )
     Spacer(modifier = Modifier.height(16.dp))
-    PasswordCautions()
+    PasswordCautions(isFulFilledPasswordRequirements1, isFulFilledPasswordRequirements2, isFulFilledPasswordRequirements3)
     // サインアップ情報記憶チェックボックス
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -222,8 +237,35 @@ fun Header(){
     }
 }
 
+/**
+ * PasswordCautions
+ *
+ * パスワードの注意事項を表示する
+ *
+ * @param isFulFilledPasswordRequirements1 パスワードの条件1(文字数制限)を満たしているかどうか
+ * @param isFulFilledPasswordRequirements2 パスワードの条件2(小文字を含む)を満たしているかどうか
+ * @param isFulFilledPasswordRequirements3 パスワードの条件3(大文字を含む)を満たしているかどうか
+ */
 @Composable
-fun PasswordCautions(){
+fun PasswordCautions(isFulFilledPasswordRequirements1: Boolean, isFulFilledPasswordRequirements2: Boolean, isFulFilledPasswordRequirements3: Boolean){
+    val caution1Color = if(isFulFilledPasswordRequirements1){
+        MaterialTheme.colorScheme.primary
+    } else{
+        MaterialTheme.colorScheme.error
+    }
+
+    val caution2Color = if(isFulFilledPasswordRequirements2){
+        MaterialTheme.colorScheme.primary
+    } else{
+        MaterialTheme.colorScheme.error
+    }
+
+    val caution3Color = if(isFulFilledPasswordRequirements3){
+        MaterialTheme.colorScheme.primary
+    } else{
+        MaterialTheme.colorScheme.error
+    }
+
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -231,14 +273,17 @@ fun PasswordCautions(){
         Text(
             text = stringResource(id = R.string.sign_up_text_password_caution_1),
             style = MaterialTheme.typography.bodySmall,
+            color = caution1Color
         )
         Text(
             text = stringResource(id = R.string.sign_up_text_password_caution_2),
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
+            color = caution2Color
         )
         Text(
             text = stringResource(id = R.string.sign_up_text_password_caution_3),
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
+            color = caution3Color
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -264,7 +309,10 @@ fun SignUpScreenPreview() {
         emailAddress =  "",
         password = "",
         isRememberMeChecked = false,
-        isSignUpButtonEnabled = false
+        isSignUpButtonEnabled = false,
+        isFulFilledPasswordRequirements1 = true,
+        isFulFilledPasswordRequirements2 = false,
+        isFulFilledPasswordRequirements3 = false
     )
     val signUpScreenEvent = SignUpScreenEvent(
         onEmailChanged = {},

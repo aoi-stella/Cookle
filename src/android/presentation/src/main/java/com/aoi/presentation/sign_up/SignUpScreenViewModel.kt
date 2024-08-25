@@ -45,6 +45,18 @@ class SignUpViewModel(
     private val _showErrorDialog = MutableStateFlow(false)
     val showErrorDialog = _showErrorDialog.asStateFlow()
 
+    // パスワードの文字数条件を満たしているかどうか
+    private val _isFulFilledPasswordRequirements1 = MutableStateFlow(false)
+    val isFulFilledPasswordRequirements1 = _isFulFilledPasswordRequirements1.asStateFlow()
+
+    // パスワードの小文字条件を満たしているかどうか
+    private val _isFulFilledPasswordRequirements2 = MutableStateFlow(false)
+    val isFulFilledPasswordRequirements2 = _isFulFilledPasswordRequirements2.asStateFlow()
+
+    // パスワードの大文字条件を満たしているかどうか
+    private val _isFulFilledPasswordRequirements3 = MutableStateFlow(false)
+    val isFulFilledPasswordRequirements3 = _isFulFilledPasswordRequirements3.asStateFlow()
+
     // 画面遷移のコールバック
     var onNavigate: (() -> Unit)? = null
 
@@ -121,12 +133,15 @@ class SignUpViewModel(
     private fun isValidPassword(password: String): Boolean {
         // 8文字以上20文字以内
         val lengthValid = password.length in 8..20
+        _isFulFilledPasswordRequirements1.value = lengthValid
 
         // 1文字以上の小文字
         val hasLowerCase = password.any { it.isLowerCase() }
+        _isFulFilledPasswordRequirements2.value = hasLowerCase
 
         // 1文字以上の大文字
         val hasUpperCase = password.any { it.isUpperCase() }
+        _isFulFilledPasswordRequirements3.value = hasUpperCase
 
         return lengthValid && hasLowerCase && hasUpperCase
     }
