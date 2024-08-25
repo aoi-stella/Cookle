@@ -8,7 +8,7 @@ package com.aoi.presentation.sign_up
  * @param emailAddress ユーザーが入力したメールアドレス
  * @param password ユーザーが入力したパスワード
  * @param isRememberMeChecked ユーザーが「ログイン情報を保存する」にチェックを入れたかどうか
- * @param isLoginButtonEnabled ログインボタンを有効にするかどうか
+ * @param isSignUpButtonEnabled ログインボタンを有効にするかどうか
  */
 data class SignUpScreenState(
     val isLoading: Boolean,
@@ -16,7 +16,7 @@ data class SignUpScreenState(
     val emailAddress: String,
     val password: String,
     val isRememberMeChecked: Boolean,
-    val isLoginButtonEnabled: Boolean
+    val isSignUpButtonEnabled: Boolean
 )
 
 /**

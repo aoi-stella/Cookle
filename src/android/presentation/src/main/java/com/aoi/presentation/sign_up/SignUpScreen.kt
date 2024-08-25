@@ -47,14 +47,14 @@ fun SignUpScreen(onNavigate: () -> Unit, vm: SignUpViewModel = viewModel()){
     val emailAddress by vm.emailAddress.collectAsState()
     val password by vm.password.collectAsState()
     val isRememberMeChecked by vm.isRememberMeChecked.collectAsState()
-    val isLoginButtonEnable by vm.isSignUpButtonEnabled.collectAsState()
+    val isSignUpButtonEnable by vm.isSignUpButtonEnabled.collectAsState()
     val signUpScreenState = SignUpScreenState(
         isLoading,
         showErrorDialog,
         emailAddress,
         password,
         isRememberMeChecked,
-        isLoginButtonEnable
+        isSignUpButtonEnable
     )
 
     val signUpScreenEvent = SignUpScreenEvent(
@@ -101,7 +101,7 @@ fun SignUpScreen(signUpScreenState: SignUpScreenState, signUpScreenEvent: SignUp
                         { signUpScreenEvent.onRememberMeCheckedChanged(it) })
                     Spacer(modifier = Modifier.height(32.dp))
                     SignUpButton(
-                        isSignUpButtonEnabled = signUpScreenState.isLoginButtonEnabled,
+                        isSignUpButtonEnabled = signUpScreenState.isSignUpButtonEnabled,
                         onSignUpButtonClicked = { signUpScreenEvent.onSignUpButtonClicked() }
                     )
                 }
@@ -237,7 +237,7 @@ fun SignUpScreenPreview() {
         emailAddress =  "",
         password = "",
         isRememberMeChecked = false,
-        isLoginButtonEnabled = false
+        isSignUpButtonEnabled = false
     )
     val signUpScreenEvent = SignUpScreenEvent(
         onEmailChanged = {},
