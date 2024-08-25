@@ -2,7 +2,7 @@ package com.aoi.presentation.sign_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aoi.domain.usecase.sign_in.SignInUseCase
+import com.aoi.domain.usecase.authentication.SignInUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

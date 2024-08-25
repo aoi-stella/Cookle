@@ -1,6 +1,6 @@
-package com.aoi.domain.usecase.sign_in
+package com.aoi.domain.usecase.authentication
 
-import com.aoi.data.repository.sign_in.SignInRepository
+import com.aoi.data.repository.authentication.AuthenticationRepository
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
  * サインイン画面のユースケース
  */
 class SignInUseCase {
-    private val repository: SignInRepository = SignInRepository()
+    private val repository: AuthenticationRepository = AuthenticationRepository()
 
     /**
      * サインイン
