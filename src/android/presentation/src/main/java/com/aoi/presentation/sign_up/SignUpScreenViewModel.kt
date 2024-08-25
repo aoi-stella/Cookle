@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aoi.domain.usecase.authentication.SignUpUseCase
 import com.aoi.domain.usecase.getStoredUserInformation.SetStoredDataWhenSucceedSignUpUseCase
-import com.aoi.domain.usecase.getStoredUserInformation.SetUserLoginInformationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -16,9 +15,7 @@ import kotlinx.coroutines.launch
  */
 class SignUpViewModel(
     private val signUpUseCase: SignUpUseCase = SignUpUseCase(),
-    private val setUserLoginInformationUseCase: SetUserLoginInformationUseCase = SetUserLoginInformationUseCase(),
     private val setStoredDataWhenSucceedSignUpUseCase: SetStoredDataWhenSucceedSignUpUseCase = SetStoredDataWhenSucceedSignUpUseCase()
-
 ): ViewModel() {
     // ユーザーが入力したメールアドレス
     private val _emailAddress = MutableStateFlow("")
@@ -100,11 +97,8 @@ class SignUpViewModel(
                 _showErrorDialog.value = true
             }
             else{
-                // ユーザーがログイン情報を保存するを選択していた場合はデータをローカルに残す
-                if(_isRememberMeChecked.value){
-                    setUserLoginInformationUseCase.setUserLoginInformation(emailAddress.value, password.value)
-                }
-                setStoredDataWhenSucceedSignUpUseCase.setStoredDataWhenSucceedSignUpUseCase()
+                // アカウント登録時のビジネスロジック処理を実施
+                setStoredDataWhenSucceedSignUpUseCase.setStoredDataWhenSucceedSignUpUseCase(_isRememberMeChecked.value, emailAddress.value, password.value)
                 onNavigate?.invoke()
             }
             _isLoading.value = false

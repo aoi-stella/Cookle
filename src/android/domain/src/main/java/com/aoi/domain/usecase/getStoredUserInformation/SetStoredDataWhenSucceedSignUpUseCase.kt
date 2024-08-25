@@ -3,9 +3,9 @@ package com.aoi.domain.usecase.getStoredUserInformation
 import com.aoi.data.repository.storedUserInformation.StoredUserInformationRepository
 
 /**
- * CheckShouldNavigateToSignUpScreenUseCase
+ * SetStoredDataWhenSucceedSignUpUseCase
  *
- * アカウント作成画面に遷移するかどうかを判断するユースケース
+ * アカウント登録時の処理を記述するユースケース
  */
 class SetStoredDataWhenSucceedSignUpUseCase {
     private val storedUserInformationRepository = StoredUserInformationRepository()
@@ -15,10 +15,15 @@ class SetStoredDataWhenSucceedSignUpUseCase {
      *
      * アカウント作成成功時の処理を行う
      *
+     * @param isStoreUserLoginDataInLocal ユーザーのログイン情報を端末に保存するかどうか
+     * @param email ユーザーのメールアドレス
+     * @param password ユーザーのパスワード
      * @return アカウント作成画面に遷移するかどうか
      */
-    fun setStoredDataWhenSucceedSignUpUseCase(){
-        //TODO: おそらく他にも追加するロジックあるのでまとめること
+    fun setStoredDataWhenSucceedSignUpUseCase(isStoreUserLoginDataInLocal: Boolean, email: String, password: String){
+        if(isStoreUserLoginDataInLocal){
+            storedUserInformationRepository.setUserLoginInformation(email, password)
+        }
         storedUserInformationRepository.setAlreadyUserSignedUp(true)
     }
 }
