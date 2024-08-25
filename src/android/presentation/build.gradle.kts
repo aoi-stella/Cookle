@@ -88,6 +88,7 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
 
     // Dagger Hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 }
