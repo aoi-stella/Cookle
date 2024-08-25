@@ -1,7 +1,7 @@
 package com.aoi.presentation.splash
 
 import androidx.lifecycle.ViewModel
-import com.aoi.domain.usecase.getStoredUserInformation.CheckShouldNavigateToSignUpScreenUseCase
+import com.aoi.domain.usecase.appLaunch.CheckShouldNavigateToSignUpScreenUseCase
 import com.aoi.presentation.navigator.application.ApplicationParentNavHostDestination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

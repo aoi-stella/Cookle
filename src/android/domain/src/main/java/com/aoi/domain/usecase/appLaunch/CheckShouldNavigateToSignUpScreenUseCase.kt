@@ -1,4 +1,4 @@
-package com.aoi.domain.usecase.getStoredUserInformation
+package com.aoi.domain.usecase.appLaunch
 
 import com.aoi.data.repository.storedUserInformation.StoredUserInformationRepository
 

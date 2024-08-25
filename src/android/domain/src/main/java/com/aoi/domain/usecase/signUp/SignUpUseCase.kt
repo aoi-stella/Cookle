@@ -1,26 +1,26 @@
-package com.aoi.domain.usecase.authentication
+package com.aoi.domain.usecase.signUp
 
 import com.aoi.data.repository.authentication.AuthenticationRepository
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 /**
- * SignInUseCase
+ * SignUpUseCase
  *
- * サインイン画面のユースケース
+ * サインアップのユースケース
  */
-class SignInUseCase {
+class SignUpUseCase {
     private val repository: AuthenticationRepository = AuthenticationRepository()
 
     /**
-     * サインイン
+     * サインアップ
      *
      * @param email メールアドレス
      * @param password パスワード
      */
-    suspend fun signIn(email: String, password: String): Result<FirebaseUser>{
+    suspend fun signUp(email: String, password: String): Result<FirebaseUser>{
         return try{
-            val authResult = repository.signIn(email, password).await()
+            val authResult = repository.signUp(email, password).await()
             Result.success(authResult.user!!)
         }
         catch (e: Exception){

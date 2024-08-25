@@ -2,8 +2,8 @@ package com.aoi.presentation.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aoi.domain.usecase.authentication.SignUpUseCase
-import com.aoi.domain.usecase.getStoredUserInformation.SetStoredDataWhenSucceedSignUpUseCase
+import com.aoi.domain.usecase.signUp.SetStoredDataWhenSucceedSignUpUseCase
+import com.aoi.domain.usecase.signUp.SignUpUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

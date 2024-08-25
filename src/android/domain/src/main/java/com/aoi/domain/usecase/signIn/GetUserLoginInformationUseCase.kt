@@ -1,11 +1,11 @@
-package com.aoi.domain.usecase.getStoredUserInformation
+package com.aoi.domain.usecase.signIn
 
 import com.aoi.data.repository.storedUserInformation.StoredUserInformationRepository
 
 /**
- * CheckShouldNavigateToSignUpScreenUseCase
+ * GetUserLoginInformationUseCase
  *
- * アカウント作成画面に遷移するかどうかを判断するユースケース
+ * ログイン画面にてユーザーのログイン情報を取得するユースケース
  */
 class GetUserLoginInformationUseCase {
     private val storedUserInformationRepository = StoredUserInformationRepository()
