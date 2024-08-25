@@ -66,7 +66,7 @@ class SignUpViewModel(
      */
     fun onPasswordChanged(password: String) {
         _password.value = password
-        validPassword = password.isNotEmpty()
+        validPassword = isValidPassword(password)
         validateInputInfo()
     }
 
@@ -110,6 +110,25 @@ class SignUpViewModel(
      */
     private fun validateInputInfo(){
         _isSignUpButtonEnabled.value = validEmail && validPassword
+    }
+
+    /**
+     * パスワードが有効かどうかを検証する
+     *
+     * @param password パスワード
+     * @return 有効かどうか
+     */
+    private fun isValidPassword(password: String): Boolean {
+        // 8文字以上20文字以内
+        val lengthValid = password.length in 8..20
+
+        // 1文字以上の小文字
+        val hasLowerCase = password.any { it.isLowerCase() }
+
+        // 1文字以上の大文字
+        val hasUpperCase = password.any { it.isUpperCase() }
+
+        return lengthValid && hasLowerCase && hasUpperCase
     }
 
     /**

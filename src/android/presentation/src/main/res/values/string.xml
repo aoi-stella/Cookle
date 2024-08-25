@@ -15,4 +15,8 @@
     <string name="sign_up_outlined_text_field_password">パスワード</string>
     <string name="sign_up_checkbox_save_login_information">ログイン情報を保存する</string>
     <string name="sign_up_dialog_failed_to_sign_up">登録に失敗しました。\nメールアドレス及びパスワードが正しいことを確認してください。</string>
+    <string name="sign_up_text_password_caution_1">パスワードは8文字以上20文字以内で設定</string>
+    <string name="sign_up_text_password_caution_2">1文字以上の小文字</string>
+    <string name="sign_up_text_password_caution_3">1文字以上の大文字</string>
+    <string name="sign_up_text_password_caution_4">他サイトにて使用しているパスワード、もしくは第三者が容易に推測可能なパスワードは不正ログイン防止の為、設定しないでください。</string>
 </resources>

@@ -182,6 +182,7 @@ fun SignUpInfo(
         true
     )
     Spacer(modifier = Modifier.height(16.dp))
+    PasswordCautions()
     // サインアップ情報記憶チェックボックス
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -218,6 +219,32 @@ fun Header(){
                 fontWeight = FontWeight.Bold
             )
         }
+    }
+}
+
+@Composable
+fun PasswordCautions(){
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.sign_up_text_password_caution_1),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text = stringResource(id = R.string.sign_up_text_password_caution_2),
+            style = MaterialTheme.typography.bodySmall
+        )
+        Text(
+            text = stringResource(id = R.string.sign_up_text_password_caution_3),
+            style = MaterialTheme.typography.bodySmall
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = stringResource(id = R.string.sign_up_text_password_caution_4),
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }
 
