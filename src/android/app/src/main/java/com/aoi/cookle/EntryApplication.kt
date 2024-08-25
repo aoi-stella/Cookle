@@ -5,12 +5,14 @@ import android.content.Context
 import com.aoi.core.firebase.FirebaseAuthManager
 import com.aoi.core.sharedpreferences.SharedPreferencesInstanceProvider
 import com.google.firebase.FirebaseApp
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * Cookle
  *
  * Applicationクラスです。
  */
+@HiltAndroidApp
 class Cookle : Application() {
     /**
      * onCreate

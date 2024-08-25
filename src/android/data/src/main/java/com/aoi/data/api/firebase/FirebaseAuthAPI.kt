@@ -9,7 +9,7 @@ import com.google.firebase.auth.AuthResult
  *
  * Firebase AuthenticationのAPIを提供します。
  */
-object FirebaseAuthAPI {
+object FirebaseAuthAPI{
     private val auth = FirebaseAuthManager.auth!!
 
     /**

@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aoi.presentation.R
 import com.aoi.utility.ui.dialog.CookleErrorDialog
 import com.aoi.utility.ui.indicator.CookleLoadingIndicator
@@ -41,7 +41,7 @@ import com.aoi.utility.ui.user_field.CookleUserInputField
  * @param vm サインアップ画面のViewModel
  */
 @Composable
-fun SignUpScreen(onNavigate: () -> Unit, vm: SignUpViewModel = viewModel()){
+fun SignUpScreen(onNavigate: () -> Unit, vm: SignUpViewModel = hiltViewModel()){
     val isLoading by vm.isLoading.collectAsState()
     val showErrorDialog by vm.showErrorDialog.collectAsState()
     val emailAddress by vm.emailAddress.collectAsState()

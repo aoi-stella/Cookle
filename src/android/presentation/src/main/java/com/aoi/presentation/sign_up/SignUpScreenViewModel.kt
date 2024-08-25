@@ -4,19 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aoi.domain.usecase.signUp.SetStoredDataWhenSucceedSignUpUseCase
 import com.aoi.domain.usecase.signUp.SignUpUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * サインアップ画面のViewModel
  *
  * @param signUpUseCase サインアップに関するユースケース
  */
-class SignUpViewModel(
-    private val signUpUseCase: SignUpUseCase = SignUpUseCase(),
-    private val setStoredDataWhenSucceedSignUpUseCase: SetStoredDataWhenSucceedSignUpUseCase = SetStoredDataWhenSucceedSignUpUseCase()
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val signUpUseCase: SignUpUseCase
 ): ViewModel() {
+    private val setStoredDataWhenSucceedSignUpUseCase: SetStoredDataWhenSucceedSignUpUseCase = SetStoredDataWhenSucceedSignUpUseCase()
     // ユーザーが入力したメールアドレス
     private val _emailAddress = MutableStateFlow("")
     val emailAddress = _emailAddress.asStateFlow()

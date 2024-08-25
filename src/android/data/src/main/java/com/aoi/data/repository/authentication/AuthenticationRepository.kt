@@ -3,13 +3,15 @@ package com.aoi.data.repository.authentication
 import com.aoi.data.api.firebase.FirebaseAuthAPI
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import javax.inject.Inject
 
 /**
  * AuthenticationRepository
  *
  * 認証に関するリポジトリです。
+ * TODO: FirebaseAuthAPIなどへの依存をDIする必要がある
  */
-class AuthenticationRepository {
+class AuthenticationRepository @Inject constructor(){
     /**
      * signIn
      *

@@ -9,12 +9,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.aoi.presentation.navigator.application.Entry
 import com.aoi.presentation.theme.CookleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * EntryActivity
  *
  * エントリーポイントとなるActivityです。
  */
+@AndroidEntryPoint
 class StartActivity : ComponentActivity() {
     /**
      * onCreate
