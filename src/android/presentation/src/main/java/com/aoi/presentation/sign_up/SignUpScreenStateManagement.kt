@@ -1,3 +1,3 @@
-package com.aoi.presentation.authentication.sign_up
+package com.aoi.presentation.sign_up
 
 data class SignUpScreenStateManagement(val aa: String)

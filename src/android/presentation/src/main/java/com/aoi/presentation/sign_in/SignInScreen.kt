@@ -1,4 +1,4 @@
-package com.aoi.presentation.authentication.sign_in
+package com.aoi.presentation.sign_in
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

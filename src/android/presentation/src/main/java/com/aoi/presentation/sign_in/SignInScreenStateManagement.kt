@@ -1,4 +1,4 @@
-package com.aoi.presentation.authentication.sign_in
+package com.aoi.presentation.sign_in
 
 /**
  * サインイン画面の状態

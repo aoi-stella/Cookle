@@ -1,4 +1,4 @@
-package com.aoi.presentation.authentication.sign_in
+package com.aoi.presentation.sign_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

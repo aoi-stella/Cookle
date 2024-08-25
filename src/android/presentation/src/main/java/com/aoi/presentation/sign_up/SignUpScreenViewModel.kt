@@ -1,4 +1,4 @@
-package com.aoi.presentation.authentication.sign_up
+package com.aoi.presentation.sign_up
 
 import androidx.lifecycle.ViewModel
 
