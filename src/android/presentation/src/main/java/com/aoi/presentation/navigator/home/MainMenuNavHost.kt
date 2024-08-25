@@ -1,33 +1,25 @@
-package com.aoi.presentation.navhost
+package com.aoi.presentation.navigator.home
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aoi.presentation.authentication.sign_in.SignInScreen
-import com.aoi.presentation.home.HomeUI
-import com.aoi.presentation.splash.SplashScreen
+import com.aoi.presentation.navigator.bulk_ingredient.BulkIngredientNavHost
 
 /**
- * アプリケーションのエントリーポイント
+ * ホーム画面のナビゲーションを定義
  */
 @Composable
-fun Entry(){
-    val navController = rememberNavController()
-    ApplicationParentNavHost(navController = navController, startDestination = "splash")
-}
-
-/**
- * アプリケーション全体のナビゲーションを定義
- */
-@Composable
-fun ApplicationParentNavHost(
+fun MainMenuNavHost(
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    modifier: Modifier
 ) {
     val commonEnterTransition = slideInHorizontally(
         initialOffsetX = { 1100 },
@@ -41,30 +33,31 @@ fun ApplicationParentNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        modifier = modifier
     ) {
-        composable("splash") {
-            SplashScreen(onNavigate = {
-                navController.navigate("signin") {
-                    popUpTo("splash") { inclusive = true }
-                }
-            })
-        }
         composable(
-            "signin",
+            "bulk_ingredient",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            SignInScreen(onNavigate = {
-                navController.navigate("home")
-            })
+            BulkIngredientNavHost(
+                navController = rememberNavController(),
+                startDestination = "bulk_ingredient",
+                modifier = Modifier.fillMaxSize()
+            )
         }
         composable(
-            "home",
+            "ingredient_list",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            HomeUI()
+        }
+        composable(
+            "settings",
+            enterTransition = { commonEnterTransition },
+            exitTransition = { commonExitTransition }
+        ) {
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.aoi.presentation.navhost
+package com.aoi.presentation.navigator.bulk_ingredient
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally

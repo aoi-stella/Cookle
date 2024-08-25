@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.aoi.presentation.navhost.MainMenuNavHost
+import com.aoi.presentation.navigator.home.MainMenuNavHost
 import com.aoi.utility.ui.bottom_navigator.CookleBottomNavigationBar
 
 /**

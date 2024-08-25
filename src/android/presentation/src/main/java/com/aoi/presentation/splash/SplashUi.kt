@@ -1,11 +1,13 @@
 package com.aoi.presentation.splash
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.aoi.presentation.R
 
@@ -15,18 +17,17 @@ import com.aoi.presentation.R
  * @param onNavigate: スプラッシュ画面から画面遷移を行う関数
  */
 @Composable
-fun SplashScreen(onNavigate: () -> Unit) {
+fun SplashScreen(onNavigate: (String) -> Unit, vm: SplashViewModel = viewModel()) {
+    val navigateDestination by vm.nextDestination.collectAsState()
     val splashFiles = R.raw.lottie_splash
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(splashFiles))
-    val progress by animateLottieCompositionAsState(composition)
+
+    LaunchedEffect(navigateDestination){
+        onNavigate(navigateDestination)
+    }
 
     LottieAnimation(
         composition = composition,
         iterations = LottieConstants.IterateForever,
     )
-
-    // 1回再生が終了したら呼び出す
-    if(progress == 1f){
-        onNavigate()
-    }
 }
