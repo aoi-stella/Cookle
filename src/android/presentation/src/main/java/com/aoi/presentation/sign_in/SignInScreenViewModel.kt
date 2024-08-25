@@ -121,7 +121,7 @@ class SignInViewModel(
      */
     private fun setPreviousUserLoginInformation(){
         val userLoginInformation = getUserLoginInformationUseCase.getUserLoginInformation()
-        val isEmptyInformation = userLoginInformation.first.isNullOrEmpty() && userLoginInformation.second.isNullOrEmpty()
+        val isEmptyInformation = userLoginInformation.first.isEmpty() && userLoginInformation.second.isEmpty()
         if(isEmptyInformation){
             return
         }
