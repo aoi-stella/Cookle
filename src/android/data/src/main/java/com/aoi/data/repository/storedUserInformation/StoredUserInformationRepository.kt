@@ -1,15 +1,16 @@
 package com.aoi.data.repository.storedUserInformation
 
-import com.aoi.core.sharedpreferences.SharedPreferencesInstanceProvider
+import android.content.SharedPreferences
+import javax.inject.Inject
 
 /**
  * StoredUserInformationRepository
  *
  * ユーザーが保存した情報に関するリポジトリ
  */
-class StoredUserInformationRepository {
-    private val sharedPreferences =
-        SharedPreferencesInstanceProvider.sharedPreferencesForStoredUserInfo
+class StoredUserInformationRepository @Inject constructor(
+    private val storedUserInfoSharedPreferences: SharedPreferences
+) {
 
     /**
      * getAlreadyUserSignedUp
@@ -19,7 +20,7 @@ class StoredUserInformationRepository {
      * @return ユーザーがアカウント作成済みかどうか
      */
     fun getAlreadyUserSignedUp(): Boolean {
-        return sharedPreferences.getBoolean("already_user_signed_up", false)
+        return storedUserInfoSharedPreferences.getBoolean("already_user_signed_up", false)
     }
 
     /**
@@ -30,7 +31,7 @@ class StoredUserInformationRepository {
      * @param value ユーザーがアカウント作成済みかどうか
      */
     fun setAlreadyUserSignedUp(value: Boolean){
-        sharedPreferences.edit().putBoolean("already_user_signed_up", value).apply()
+        storedUserInfoSharedPreferences.edit().putBoolean("already_user_signed_up", value).apply()
     }
 
     /**
@@ -42,8 +43,8 @@ class StoredUserInformationRepository {
      * @param password パスワード
      */
     fun setUserLoginInformation(email: String, password: String){
-        sharedPreferences.edit().putString("login_email", email).apply()
-        sharedPreferences.edit().putString("login_password", password).apply()
+        storedUserInfoSharedPreferences.edit().putString("login_email", email).apply()
+        storedUserInfoSharedPreferences.edit().putString("login_password", password).apply()
     }
 
     /**
@@ -54,8 +55,8 @@ class StoredUserInformationRepository {
      * @return ユーザーのログイン情報
      */
     fun getUserLoginInformation(): Pair<String, String> {
-        val email = sharedPreferences.getString("login_email", "")!!
-        val password = sharedPreferences.getString("login_password", "")!!
+        val email = storedUserInfoSharedPreferences.getString("login_email", "")!!
+        val password = storedUserInfoSharedPreferences.getString("login_password", "")!!
         return Pair(email, password)
     }
 }

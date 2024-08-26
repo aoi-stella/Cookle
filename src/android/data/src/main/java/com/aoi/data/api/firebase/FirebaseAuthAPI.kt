@@ -1,16 +1,18 @@
 package com.aoi.data.api.firebase
 
-import com.aoi.core.firebase.FirebaseAuthManager
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import javax.inject.Inject
 
 /**
  * FirebaseAuthAPI
  *
  * Firebase AuthenticationのAPIを提供します。
  */
-object FirebaseAuthAPI{
-    private val auth = FirebaseAuthManager.auth!!
+class FirebaseAuthAPI @Inject constructor(
+    private val firebaseAuth: FirebaseAuth
+){
 
     /**
      * signInWithEmailAndPassword
@@ -22,7 +24,7 @@ object FirebaseAuthAPI{
      * @return Task<AuthResult>
      */
     fun signInWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
-        return auth.signInWithEmailAndPassword(email, password)
+        return firebaseAuth.signInWithEmailAndPassword(email, password)
     }
 
     /**
@@ -35,6 +37,6 @@ object FirebaseAuthAPI{
      * @return Task<AuthResult>
      */
     fun signUpWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
-        return auth.createUserWithEmailAndPassword(email, password)
+        return firebaseAuth.createUserWithEmailAndPassword(email, password)
     }
 }

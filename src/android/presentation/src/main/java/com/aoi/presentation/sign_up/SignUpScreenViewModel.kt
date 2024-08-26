@@ -17,9 +17,9 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val setStoredDataWhenSucceedSignUpUseCase: SetStoredDataWhenSucceedSignUpUseCase
 ): ViewModel() {
-    private val setStoredDataWhenSucceedSignUpUseCase: SetStoredDataWhenSucceedSignUpUseCase = SetStoredDataWhenSucceedSignUpUseCase()
     // ユーザーが入力したメールアドレス
     private val _emailAddress = MutableStateFlow("")
     val emailAddress = _emailAddress.asStateFlow()

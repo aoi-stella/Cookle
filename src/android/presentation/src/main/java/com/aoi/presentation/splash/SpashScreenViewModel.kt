@@ -3,16 +3,20 @@ package com.aoi.presentation.splash
 import androidx.lifecycle.ViewModel
 import com.aoi.domain.usecase.appLaunch.CheckShouldNavigateToSignUpScreenUseCase
 import com.aoi.presentation.navigator.application.ApplicationParentNavHostDestination
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 /**
  * SplashViewModel
  *
  * スプラッシュ画面のViewModel。
  */
-class SplashViewModel: ViewModel(){
-    private val checkShouldNavigateToSignUpScreenUseCase = CheckShouldNavigateToSignUpScreenUseCase()
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    private val checkShouldNavigateToSignUpScreenUseCase: CheckShouldNavigateToSignUpScreenUseCase
+): ViewModel(){
     // スプラッシュ画面の次の遷移先
     private val _nextDestination = MutableStateFlow(ApplicationParentNavHostDestination.SIGN_IN)
     val nextDestination = _nextDestination.asStateFlow()

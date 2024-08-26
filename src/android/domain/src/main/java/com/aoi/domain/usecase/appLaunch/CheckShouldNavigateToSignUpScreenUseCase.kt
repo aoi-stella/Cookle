@@ -1,15 +1,16 @@
 package com.aoi.domain.usecase.appLaunch
 
 import com.aoi.data.repository.storedUserInformation.StoredUserInformationRepository
+import javax.inject.Inject
 
 /**
  * CheckShouldNavigateToSignUpScreenUseCase
  *
  * アカウント作成画面に遷移するかどうかを判断するユースケース
  */
-class CheckShouldNavigateToSignUpScreenUseCase {
-    private val storedUserInformationRepository = StoredUserInformationRepository()
-
+class CheckShouldNavigateToSignUpScreenUseCase @Inject constructor(
+    private val storedUserInformationRepository: StoredUserInformationRepository
+) {
     /**
      * getShouldNavigateToSignUpScreen
      *

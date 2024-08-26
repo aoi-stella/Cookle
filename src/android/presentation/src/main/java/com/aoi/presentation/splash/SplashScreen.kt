@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -17,7 +17,7 @@ import com.aoi.presentation.R
  * @param onNavigate: スプラッシュ画面から画面遷移を行う関数
  */
 @Composable
-fun SplashScreen(onNavigate: (String) -> Unit, vm: SplashViewModel = viewModel()) {
+fun SplashScreen(onNavigate: (String) -> Unit, vm: SplashViewModel = hiltViewModel()) {
     val navigateDestination by vm.nextDestination.collectAsState()
     val splashFiles = R.raw.lottie_splash
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(splashFiles))

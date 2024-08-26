@@ -1,14 +1,16 @@
 package com.aoi.domain.usecase.signUp
 
 import com.aoi.data.repository.storedUserInformation.StoredUserInformationRepository
+import javax.inject.Inject
 
 /**
  * SetStoredDataWhenSucceedSignUpUseCase
  *
  * アカウント登録時の処理を記述するユースケース
  */
-class SetStoredDataWhenSucceedSignUpUseCase {
-    private val storedUserInformationRepository = StoredUserInformationRepository()
+class SetStoredDataWhenSucceedSignUpUseCase @Inject constructor(
+    private val storedUserInformationRepository: StoredUserInformationRepository
+) {
 
     /**
      * setStoredDataWhenSucceedLoginUseCase

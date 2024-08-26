@@ -2,17 +2,21 @@ package com.aoi.cookle
 
 import android.app.Application
 import android.content.Context
-import com.aoi.core.firebase.FirebaseAuthManager
-import com.aoi.core.sharedpreferences.SharedPreferencesInstanceProvider
+import android.content.SharedPreferences
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 /**
  * Cookle
  *
  * Applicationクラスです。
- */
-@HiltAndroidApp
+ */@HiltAndroidApp
 class Cookle : Application() {
     /**
      * onCreate
@@ -21,27 +25,20 @@ class Cookle : Application() {
      */
     override fun onCreate() {
         super.onCreate()
-        initFirebase()
-        initSharedPreferences(this)
-    }
-
-    /**
-     * initFirebase
-     *
-     * Firebaseを初期化します。
-     */
-    private fun initFirebase(){
         FirebaseApp.initializeApp(this)
-        FirebaseAuthManager.initialize()
+    }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object ModuleProvider {
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 
-    /**
-     * initSharedPreferences
-     *
-     * SharedPreferencesを初期化します。
-     * @param ctx Context
-     */
-    private fun initSharedPreferences(ctx: Context){
-        SharedPreferencesInstanceProvider.initializeAllSharedPreferences(ctx)
+    @Provides
+    fun provideStoredUserInfoSharedPreferences(@ApplicationContext ctx: Context): SharedPreferences {
+        return ctx.getSharedPreferences("stored_user_info", Context.MODE_PRIVATE)
     }
 }

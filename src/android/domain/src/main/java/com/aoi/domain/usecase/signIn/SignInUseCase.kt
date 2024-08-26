@@ -3,15 +3,16 @@ package com.aoi.domain.usecase.signIn
 import com.aoi.data.repository.authentication.AuthenticationRepository
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 /**
  * SignInUseCase
  *
  * サインイン画面のユースケース
  */
-class SignInUseCase {
-    private val repository: AuthenticationRepository = AuthenticationRepository()
-
+class SignInUseCase @Inject constructor(
+    private val repository: AuthenticationRepository
+){
     /**
      * サインイン
      *

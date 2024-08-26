@@ -2,20 +2,23 @@ package com.aoi.presentation.sign_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aoi.domain.usecase.signIn.SignInUseCase
 import com.aoi.domain.usecase.signIn.GetUserLoginInformationUseCase
+import com.aoi.domain.usecase.signIn.SignInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * サインイン画面のViewModel
  *
  * @param signInUseCase サインインに関するユースケース
  */
-class SignInViewModel(
-    private val signInUseCase: SignInUseCase = SignInUseCase(),
-    private val getUserLoginInformationUseCase: GetUserLoginInformationUseCase = GetUserLoginInformationUseCase()
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val signInUseCase: SignInUseCase,
+    private val getUserLoginInformationUseCase: GetUserLoginInformationUseCase,
 ): ViewModel() {
     // ユーザーが入力したメールアドレス
     private val _emailAddress = MutableStateFlow("")

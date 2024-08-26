@@ -9,9 +9,10 @@ import javax.inject.Inject
  * AuthenticationRepository
  *
  * 認証に関するリポジトリです。
- * TODO: FirebaseAuthAPIなどへの依存をDIする必要がある
  */
-class AuthenticationRepository @Inject constructor(){
+class AuthenticationRepository @Inject constructor(
+    private val firebaseAuthAPI: FirebaseAuthAPI
+){
     /**
      * signIn
      *
@@ -22,7 +23,7 @@ class AuthenticationRepository @Inject constructor(){
      * @return Task<AuthResult>
      */
     fun signIn(email: String, password: String): Task<AuthResult> {
-        return FirebaseAuthAPI.signInWithEmailAndPassword(email, password)
+        return firebaseAuthAPI.signInWithEmailAndPassword(email, password)
     }
 
     /**
@@ -35,6 +36,6 @@ class AuthenticationRepository @Inject constructor(){
      * @return Task<AuthResult>
      */
     fun signUp(email: String, password: String): Task<AuthResult> {
-        return FirebaseAuthAPI.signUpWithEmailAndPassword(email, password)
+        return firebaseAuthAPI.signUpWithEmailAndPassword(email, password)
     }
 }
