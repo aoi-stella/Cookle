@@ -11,4 +11,5 @@ plugins {
     id("com.android.library") version "8.2.2" apply false
     id("com.google.gms.google-services") version "4.4.1" apply false
     id("com.google.dagger.hilt.android") version "2.52" apply false
+    id("de.mannodermaus.android-junit5") version "1.11.0.0" apply false
 }

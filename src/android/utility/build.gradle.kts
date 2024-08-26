@@ -51,4 +51,11 @@ dependencies {
 
     // navigation
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+
+    // JUnit5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
+
+    // MockK
+    testImplementation("io.mockk:mockk:1.13.12")
 }

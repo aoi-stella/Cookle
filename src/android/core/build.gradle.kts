@@ -53,6 +53,13 @@ dependencies {
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.52")
     kapt("com.google.dagger:hilt-android-compiler:2.52")
+
+    // JUnit5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
+
+    // MockK
+    testImplementation("io.mockk:mockk:1.13.12")
 }
 kapt {
     correctErrorTypes = true
