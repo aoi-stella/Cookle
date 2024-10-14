@@ -1,4 +1,4 @@
-package com.aoi.presentation.home.ingredient_bulk
+package com.aoi.presentation.home.ingredient_addition
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -46,35 +46,35 @@ import com.aoi.presentation.R
  * @param onNavigateForAddIngredient 食材追加画面への遷移
  */
 @Composable
-fun BulkIngredient(
+fun IngredientAddition(
     onNavigateForIngredientDetail: () -> Unit,
     onNavigateForAddIngredient: () -> Unit,
-    vm: BulkIngredientViewModel = hiltViewModel()
+    vm: IngredientAdditionViewModel = hiltViewModel()
 ) {
     val selectedCategory by vm.selectedCategory.collectAsState()
     val categoryList by vm.categoryList.collectAsState()
     val updateIngredientCategory by vm.updateIngredientCategory.collectAsState()
     val contentList by vm.contentList.collectAsState()
-    val state = BulkIngredientScreenState(
+    val state = IngredientAdditionScreenState(
         selectedCategory = selectedCategory,
         categoryList = categoryList,
         updateIngredient = updateIngredientCategory,
         contentList = contentList
     )
 
-    val event = BulkIngredientScreenEvent(
+    val event = IngredientAdditionScreenEvent(
         updateIngredientCategory = { vm.updateIngredientCategory() },
         onChangedCategory = { vm.onChangedCategory(it) },
         onClickContentCard = { onNavigateForIngredientDetail() },
     )
 
-    BulkIngredient(state, event)
+    IngredientAddition(state, event)
 }
 
 @Composable
-fun BulkIngredient(
-    state: BulkIngredientScreenState,
-    event: BulkIngredientScreenEvent
+fun IngredientAddition(
+    state: IngredientAdditionScreenState,
+    event: IngredientAdditionScreenEvent
 ) {
 
     LaunchedEffect(key1 = state.updateIngredient){
@@ -221,7 +221,7 @@ fun Header(){
 )
 @Composable
 fun Preview() {
-    val state = BulkIngredientScreenState(
+    val state = IngredientAdditionScreenState(
         selectedCategory = "全て",
         categoryList = listOf("全て", "野菜", "果物", "肉", "魚", "乳製品", "穀物", "その他"),
         updateIngredient = true,
@@ -243,10 +243,10 @@ fun Preview() {
             ContentCard("浅利", "", "魚"),
         )
     )
-    val event = BulkIngredientScreenEvent(
+    val event = IngredientAdditionScreenEvent(
         updateIngredientCategory = {},
         onChangedCategory = {},
         onClickContentCard = {}
     )
-    BulkIngredient(state,event)
+    IngredientAddition(state,event)
 }

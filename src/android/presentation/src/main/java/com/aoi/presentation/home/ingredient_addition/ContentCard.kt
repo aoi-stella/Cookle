@@ -1,4 +1,4 @@
-package com.aoi.presentation.home.ingredient_bulk
+package com.aoi.presentation.home.ingredient_addition
 
 /**
  * コンテンツカード

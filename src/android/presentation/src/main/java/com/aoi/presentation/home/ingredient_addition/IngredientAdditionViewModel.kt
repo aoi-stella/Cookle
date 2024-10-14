@@ -1,4 +1,4 @@
-package com.aoi.presentation.home.ingredient_bulk
+package com.aoi.presentation.home.ingredient_addition
 
 import androidx.lifecycle.ViewModel
 import com.aoi.domain.usecase.ingredient_category.GetIngredientCategoryUseCase
@@ -11,7 +11,7 @@ import javax.inject.Inject
  * 食材一括管理画面のViewModel
  */
 @HiltViewModel
-class BulkIngredientViewModel @Inject constructor(
+class IngredientAdditionViewModel @Inject constructor(
     private val getIngredientCategoryUseCase: GetIngredientCategoryUseCase
 ): ViewModel() {
 

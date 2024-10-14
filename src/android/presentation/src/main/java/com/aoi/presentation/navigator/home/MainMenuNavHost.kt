@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aoi.presentation.navigator.bulk_ingredient.BulkIngredientNavHost
+import com.aoi.presentation.navigator.ingredient_view.IngredientAdditionNavHost
 
 /**
  * ホーム画面のナビゲーションを定義
@@ -37,24 +37,24 @@ fun MainMenuNavHost(
         modifier = modifier
     ) {
         composable(
-            "bulk_ingredient",
+            "ingredient_view",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            BulkIngredientNavHost(
+            IngredientAdditionNavHost(
                 navController = rememberNavController(),
-                startDestination = "bulk_ingredient",
+                startDestination = "ingredient_view",
                 modifier = Modifier.fillMaxSize()
             )
         }
         composable(
-            "ingredient_list",
+            "ingredient_addition",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
         }
         composable(
-            "settings",
+            "app_settings",
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {

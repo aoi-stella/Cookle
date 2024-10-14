@@ -26,16 +26,16 @@ class HomeViewModel @Inject constructor(
         val itemsListUIType: List<NavigationItemUIEntity> = itemsListDomainType.map {
             //TODO: アイコン取得のロジック後でいい感じにしなきゃね
             val selectedIcon: ImageVector = when(it.route){
-                "bulk_ingredient" -> Icons.Default.Home
-                "ingredient_list" -> Icons.Default.Email
-                "settings" -> Icons.Default.Settings
+                "ingredient_view" -> Icons.Default.Home
+                "ingredient_addition" -> Icons.Default.Email
+                "app_settings" -> Icons.Default.Settings
                 else -> Icons.Default.Home
             }
 
             val unselectedIcon: ImageVector = when(it.route){
-                "bulk_ingredient" -> Icons.Default.Home
-                "ingredient_list" -> Icons.Default.Email
-                "settings" -> Icons.Default.Settings
+                "ingredient_view" -> Icons.Default.Home
+                "ingredient_addition" -> Icons.Default.Email
+                "app_settings" -> Icons.Default.Settings
                 else -> Icons.Default.Home
             }
 

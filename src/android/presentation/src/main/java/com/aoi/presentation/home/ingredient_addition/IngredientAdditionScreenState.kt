@@ -1,4 +1,4 @@
-package com.aoi.presentation.home.ingredient_bulk
+package com.aoi.presentation.home.ingredient_addition
 
 /**
  * 食材一括管理画面の状態
@@ -8,7 +8,7 @@ package com.aoi.presentation.home.ingredient_bulk
  * @param updateIngredient 食材カテゴリの更新処理
  * @param contentList コンテンツリスト
  */
-data class BulkIngredientScreenState (
+data class IngredientAdditionScreenState (
     val selectedCategory: String,
     val categoryList: List<String>,
     val updateIngredient: Boolean,
@@ -22,7 +22,7 @@ data class BulkIngredientScreenState (
  * @param updateIngredientCategory 食材カテゴリの更新処理
  * @param onClickContentCard コンテンツカードがクリックされたときの処理
  */
-data class BulkIngredientScreenEvent (
+data class IngredientAdditionScreenEvent (
     val onChangedCategory: (String) -> Unit,
     val updateIngredientCategory: () -> Unit,
     val onClickContentCard: () -> Unit,

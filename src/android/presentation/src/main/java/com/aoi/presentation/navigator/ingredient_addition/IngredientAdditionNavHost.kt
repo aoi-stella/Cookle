@@ -1,4 +1,4 @@
-package com.aoi.presentation.navigator.bulk_ingredient
+package com.aoi.presentation.navigator.ingredient_view
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.aoi.presentation.home.ingredient_bulk.BulkIngredient
+import com.aoi.presentation.home.ingredient_addition.IngredientAddition
 import com.aoi.presentation.home.ingredient_detail.IngredientDetailUI
 
 /**
@@ -20,7 +20,7 @@ import com.aoi.presentation.home.ingredient_detail.IngredientDetailUI
  * @param modifier Modifier
  */
 @Composable
-fun BulkIngredientNavHost(
+fun IngredientAdditionNavHost(
     navController: NavHostController,
     startDestination: String,
     modifier: Modifier
@@ -45,7 +45,7 @@ fun BulkIngredientNavHost(
         animationSpec = tween(800)
     )
 
-    var currentRoute = remember { "bulk_ingredient" }
+    var currentRoute = remember { "ingredient_view" }
 
     NavHost(
         navController = navController,
@@ -53,15 +53,15 @@ fun BulkIngredientNavHost(
         modifier = modifier
     ) {
         composable(
-            "bulk_ingredient",
-            enterTransition = { if(currentRoute == "bulk_ingredient") slideInScreenEnterTransition else slideOutScreenEnterTransition },
+            "ingredient_view",
+            enterTransition = { if(currentRoute == "ingredient_view") slideInScreenEnterTransition else slideOutScreenEnterTransition },
             exitTransition = { slideInScreenExitTransition }
         ) {
-            currentRoute = "bulk_ingredient"
-            BulkIngredient(
-                onNavigateForAddIngredient = { navController.navigate("bulk_ingredient") },
+            currentRoute = "ingredient_view"
+            IngredientAddition(
+                onNavigateForAddIngredient = { navController.navigate("ingredient_view") },
                 onNavigateForIngredientDetail = { navController.navigate("ingredient_detail"){
-                    popUpTo("bulk_ingredient") { inclusive = false }
+                    popUpTo("ingredient_view") { inclusive = false }
                 } }
             )
         }

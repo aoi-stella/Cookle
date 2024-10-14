@@ -26,7 +26,7 @@ fun HomeUI(vm: HomeViewModel = hiltViewModel()) {
     ) { paddingValues ->
         MainMenuNavHost(
             navController = bottomNavController,
-            startDestination = "bulk_ingredient",
+            startDestination = "ingredient_view",
             modifier = Modifier.padding(paddingValues))
     }
 }

@@ -15,17 +15,17 @@ class NavigationItemsRepository @Inject constructor() {
     fun getNavigationItems(): List<NavigationItemDomainEntity> {
         return listOf(
             NavigationItemDomainEntity(
-                route = "bulk_ingredient",
-                screenName = "食材追加",
+                route = "ingredient_view",
+                screenName = "食材一覧",
                 hasNews = false,
             ),
             NavigationItemDomainEntity(
-                route = "ingredient_list",
-                screenName = "食材一覧",
+                route = "ingredient_addition",
+                screenName = "食材追加",
                 hasNews = false
             ),
             NavigationItemDomainEntity(
-                route = "settings",
+                route = "app_settings",
                 screenName = "設定",
                 hasNews = true,
             ),
