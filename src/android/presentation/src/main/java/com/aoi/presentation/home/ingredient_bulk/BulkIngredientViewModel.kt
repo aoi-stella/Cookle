@@ -26,6 +26,30 @@ class BulkIngredientViewModel @Inject constructor(
     private val _updateIngredientCategory = MutableStateFlow(true)
     val updateIngredientCategory = _updateIngredientCategory.asStateFlow()
 
+    // コンテンツリスト
+    private val _contentList = MutableStateFlow(listOf<ContentCard>())
+    val contentList = _contentList.asStateFlow()
+
+    init {
+        _contentList.value = listOf(
+            ContentCard("トマト", "", "野菜"),
+            ContentCard("じゃがいも", "", "野菜"),
+            ContentCard("人参", "", "野菜"),
+            ContentCard("パセリ", "", "野菜"),
+            ContentCard("ハンバーグ用牛肉", "", "肉"),
+            ContentCard("挽肉", "", "肉"),
+            ContentCard("ステーキ用フィレステーキ", "", "肉"),
+            ContentCard("牛乳", "", "乳製品"),
+            ContentCard("チェダーチーズ", "", "乳製品"),
+            ContentCard("カマンベールチーズ", "", "乳製品"),
+            ContentCard("ラクレット", "", "乳製品"),
+            ContentCard("鯵", "", "魚"),
+            ContentCard("秋刀魚", "", "魚"),
+            ContentCard("鮭", "", "魚"),
+            ContentCard("浅利", "", "魚"),
+        )
+    }
+
     /**
      * カテゴリが変更されたときの処理
      *

@@ -1,11 +1,23 @@
 package com.aoi.presentation.home.ingredient_bulk
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -15,10 +27,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.aoi.presentation.R
 
 /**
  * 食材一括管理画面
@@ -36,15 +54,18 @@ fun BulkIngredient(
     val selectedCategory by vm.selectedCategory.collectAsState()
     val categoryList by vm.categoryList.collectAsState()
     val updateIngredientCategory by vm.updateIngredientCategory.collectAsState()
+    val contentList by vm.contentList.collectAsState()
     val state = BulkIngredientScreenState(
         selectedCategory = selectedCategory,
         categoryList = categoryList,
-        updateIngredient = updateIngredientCategory
+        updateIngredient = updateIngredientCategory,
+        contentList = contentList
     )
 
     val event = BulkIngredientScreenEvent(
         updateIngredientCategory = { vm.updateIngredientCategory() },
-        onChangedCategory = { vm.onChangedCategory(it) }
+        onChangedCategory = { vm.onChangedCategory(it) },
+        onClickContentCard = { onNavigateForIngredientDetail() },
     )
 
     BulkIngredient(state, event)
@@ -70,11 +91,102 @@ fun BulkIngredient(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.surface)
+                    .verticalScroll(rememberScrollState())
             ) {
+                state.categoryList.forEach {
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    ContentRow(it, state.contentList, event.onClickContentCard)
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
             }
         }
     )
+}
+
+@Composable
+fun ContentRow(contentKind: String,
+               contentsList: List<ContentCard>,
+               onClickContentCard: () -> Unit
+) {
+    val displayContentsList = contentsList.filter { it.type == contentKind }
+    if(displayContentsList.isNotEmpty()){
+        LazyRow(
+            modifier =Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
+            items(contentsList.size) { index ->
+                if(contentsList[index].type == contentKind) {
+                    ContentCard(contentsList[index], onClickContentCard)
+                }
+            }
+        }
+    }
+    else {
+        Text(
+            text = "データを新規追加してください",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun ContentCard(contentCard: ContentCard, onClickContentCard: () -> Unit) {
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.clickable { onClickContentCard() }
+    ) {
+        val imageSize = 100.dp
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .wrapContentWidth()
+        ) {
+            var painter = painterResource(R.drawable.ic_content_card_icon_default)
+            var colorFilter: ColorFilter? = null
+            var imageModifier = Modifier.size(imageSize)
+                .clip(RoundedCornerShape(16.dp))
+
+            if(contentCard.iconURL.isEmpty()){
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onTertiaryContainer)
+                painter = painterResource(R.drawable.ic_content_card_icon_default)
+                imageModifier = imageModifier
+                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+            }
+            Image(
+                painter = painter,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                colorFilter = colorFilter,
+                modifier = imageModifier
+            )
+            Text(
+                modifier = Modifier
+                    .width(imageSize)
+                    .padding(top = 8.dp),
+                text = contentCard.title,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 2,
+            )
+        }
+    }
 }
 
 /**
@@ -111,12 +223,30 @@ fun Header(){
 fun Preview() {
     val state = BulkIngredientScreenState(
         selectedCategory = "全て",
-        categoryList = listOf("全て", "野菜", "肉", "魚", "卵", "乳製品", "穀物", "豆", "果物"),
-        updateIngredient = true
+        categoryList = listOf("全て", "野菜", "果物", "肉", "魚", "乳製品", "穀物", "その他"),
+        updateIngredient = true,
+        contentList = listOf(
+            ContentCard("トマト", "", "野菜"),
+            ContentCard("じゃがいも", "", "野菜"),
+            ContentCard("人参", "", "野菜"),
+            ContentCard("パセリ", "", "野菜"),
+            ContentCard("ハンバーグ用牛肉", "", "肉"),
+            ContentCard("挽肉", "", "肉"),
+            ContentCard("ステーキ用フィレステーキ", "", "肉"),
+            ContentCard("牛乳", "", "乳製品"),
+            ContentCard("チェダーチーズ", "", "乳製品"),
+            ContentCard("カマンベールチーズ", "", "乳製品"),
+            ContentCard("ラクレット", "", "乳製品"),
+            ContentCard("鯵", "", "魚"),
+            ContentCard("秋刀魚", "", "魚"),
+            ContentCard("鮭", "", "魚"),
+            ContentCard("浅利", "", "魚"),
+        )
     )
     val event = BulkIngredientScreenEvent(
         updateIngredientCategory = {},
-        onChangedCategory = {}
+        onChangedCategory = {},
+        onClickContentCard = {}
     )
     BulkIngredient(state,event)
 }
