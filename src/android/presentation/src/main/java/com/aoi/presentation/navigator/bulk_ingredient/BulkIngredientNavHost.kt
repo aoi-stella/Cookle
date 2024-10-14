@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.aoi.presentation.home.ingredient_bulk.BulkIngredientUI
+import com.aoi.presentation.home.ingredient_bulk.BulkIngredient
 import com.aoi.presentation.home.ingredient_detail.IngredientDetailUI
 
 /**
@@ -58,7 +58,7 @@ fun BulkIngredientNavHost(
             exitTransition = { slideInScreenExitTransition }
         ) {
             currentRoute = "bulk_ingredient"
-            BulkIngredientUI(
+            BulkIngredient(
                 onNavigateForAddIngredient = { navController.navigate("bulk_ingredient") },
                 onNavigateForIngredientDetail = { navController.navigate("ingredient_detail"){
                     popUpTo("bulk_ingredient") { inclusive = false }
