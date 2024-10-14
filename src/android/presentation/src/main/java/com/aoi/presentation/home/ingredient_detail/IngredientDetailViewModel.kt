@@ -1,13 +1,16 @@
 package com.aoi.presentation.home.ingredient_detail
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 /**
  * 食材詳細画面のViewModel
  */
-class IngredientDetailViewModel: ViewModel() {
+@HiltViewModel
+class IngredientDetailViewModel @Inject constructor(): ViewModel() {
     // 通知設定の有効無効
     private val _enabledNotify = MutableStateFlow(false)
     val enabledNotify = _enabledNotify.asStateFlow()

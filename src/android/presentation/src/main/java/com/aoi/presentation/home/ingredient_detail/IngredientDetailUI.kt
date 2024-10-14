@@ -38,7 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aoi.presentation.R
 import java.util.Calendar
 
@@ -49,7 +49,7 @@ import java.util.Calendar
  */
 @Composable
 fun IngredientDetailUI(
-    vm: IngredientDetailViewModel = viewModel()
+    vm: IngredientDetailViewModel = hiltViewModel()
 ) {
     val enabledNotify = vm.enabledNotify.collectAsState()
     val showDateDialog = vm.showDateDialog.collectAsState()
