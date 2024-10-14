@@ -25,5 +25,5 @@ data class IngredientAdditionScreenState (
 data class IngredientAdditionScreenEvent (
     val onChangedCategory: (String) -> Unit,
     val updateIngredientCategory: () -> Unit,
-    val onClickContentCard: () -> Unit,
+    val onClickContentCard: (String) -> Unit,
 )

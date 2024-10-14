@@ -30,23 +30,27 @@ class IngredientAdditionViewModel @Inject constructor(
     private val _contentList = MutableStateFlow(listOf<ContentCard>())
     val contentList = _contentList.asStateFlow()
 
+    // 選択されたカードのid
+    private val _selectedCardId = MutableStateFlow("")
+    val selectedCardId = _selectedCardId.asStateFlow()
+
     init {
         _contentList.value = listOf(
-            ContentCard("トマト", "", "野菜"),
-            ContentCard("じゃがいも", "", "野菜"),
-            ContentCard("人参", "", "野菜"),
-            ContentCard("パセリ", "", "野菜"),
-            ContentCard("ハンバーグ用牛肉", "", "肉"),
-            ContentCard("挽肉", "", "肉"),
-            ContentCard("ステーキ用フィレステーキ", "", "肉"),
-            ContentCard("牛乳", "", "乳製品"),
-            ContentCard("チェダーチーズ", "", "乳製品"),
-            ContentCard("カマンベールチーズ", "", "乳製品"),
-            ContentCard("ラクレット", "", "乳製品"),
-            ContentCard("鯵", "", "魚"),
-            ContentCard("秋刀魚", "", "魚"),
-            ContentCard("鮭", "", "魚"),
-            ContentCard("浅利", "", "魚"),
+            ContentCard("トマト", "", "野菜", "1"),
+            ContentCard("じゃがいも", "", "野菜", "2"),
+            ContentCard("人参", "", "野菜", "3"),
+            ContentCard("パセリ", "", "野菜", "4"),
+            ContentCard("ハンバーグ用牛肉", "", "肉", "5"),
+            ContentCard("挽肉", "", "肉", "6"),
+            ContentCard("ステーキ用フィレステーキ", "", "肉", "7"),
+            ContentCard("牛乳", "", "乳製品", "8"),
+            ContentCard("チェダーチーズ", "", "乳製品", "9"),
+            ContentCard("カマンベールチーズ", "", "乳製品", "10"),
+            ContentCard("ラクレット", "", "乳製品", "11"),
+            ContentCard("鯵", "", "魚", "12"),
+            ContentCard("秋刀魚", "", "魚", "13"),
+            ContentCard("鮭", "", "魚", "14"),
+            ContentCard("浅利", "", "魚", "15"),
         )
     }
 

@@ -47,6 +47,7 @@ import java.util.Calendar
  */
 @Composable
 fun IngredientDetailUI(
+    ingredientId: String,
     vm: IngredientDetailViewModel = hiltViewModel()
 ) {
     val enabledNotify = vm.enabledNotify.collectAsState()
@@ -319,5 +320,5 @@ fun TimePicker(
 )
 @Composable
 fun PreviewIngredientDetailUI() {
-    IngredientDetailUI()
+    IngredientDetailUI("")
 }

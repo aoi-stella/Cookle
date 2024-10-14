@@ -47,10 +47,11 @@ import com.aoi.presentation.R
  */
 @Composable
 fun IngredientAddition(
-    onNavigateForIngredientDetail: () -> Unit,
+    onNavigateForIngredientDetail: (String) -> Unit,
     onNavigateForAddIngredient: () -> Unit,
     vm: IngredientAdditionViewModel = hiltViewModel()
 ) {
+    val selectedCardId by vm.selectedCardId.collectAsState()
     val selectedCategory by vm.selectedCategory.collectAsState()
     val categoryList by vm.categoryList.collectAsState()
     val updateIngredientCategory by vm.updateIngredientCategory.collectAsState()
@@ -65,7 +66,7 @@ fun IngredientAddition(
     val event = IngredientAdditionScreenEvent(
         updateIngredientCategory = { vm.updateIngredientCategory() },
         onChangedCategory = { vm.onChangedCategory(it) },
-        onClickContentCard = { onNavigateForIngredientDetail() },
+        onClickContentCard = { onNavigateForIngredientDetail(it) },
     )
 
     IngredientAddition(state, event)
@@ -114,7 +115,7 @@ fun IngredientAddition(
 @Composable
 fun ContentRow(contentKind: String,
                contentsList: List<ContentCard>,
-               onClickContentCard: () -> Unit
+               onClickContentCard: (String) -> Unit
 ) {
     val displayContentsList = contentsList.filter { it.category == contentKind }
     if(displayContentsList.isNotEmpty()){
@@ -144,11 +145,11 @@ fun ContentRow(contentKind: String,
 }
 
 @Composable
-fun ContentCard(contentCard: ContentCard, onClickContentCard: () -> Unit) {
+fun ContentCard(contentCard: ContentCard, onClickContentCard: (String) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.clickable { onClickContentCard() }
+        modifier = Modifier.clickable { onClickContentCard(contentCard.uuid) }
     ) {
         val imageSize = 100.dp
         Column(
@@ -226,21 +227,21 @@ fun Preview() {
         categoryList = listOf("全て", "野菜", "果物", "肉", "魚", "乳製品", "穀物", "その他"),
         updateIngredient = true,
         contentList = listOf(
-            ContentCard("トマト", "", "野菜"),
-            ContentCard("じゃがいも", "", "野菜"),
-            ContentCard("人参", "", "野菜"),
-            ContentCard("パセリ", "", "野菜"),
-            ContentCard("ハンバーグ用牛肉", "", "肉"),
-            ContentCard("挽肉", "", "肉"),
-            ContentCard("ステーキ用フィレステーキ", "", "肉"),
-            ContentCard("牛乳", "", "乳製品"),
-            ContentCard("チェダーチーズ", "", "乳製品"),
-            ContentCard("カマンベールチーズ", "", "乳製品"),
-            ContentCard("ラクレット", "", "乳製品"),
-            ContentCard("鯵", "", "魚"),
-            ContentCard("秋刀魚", "", "魚"),
-            ContentCard("鮭", "", "魚"),
-            ContentCard("浅利", "", "魚"),
+            ContentCard("トマト", "", "野菜", ""),
+            ContentCard("じゃがいも", "", "野菜", ""),
+            ContentCard("人参", "", "野菜", ""),
+            ContentCard("パセリ", "", "野菜", ""),
+            ContentCard("ハンバーグ用牛肉", "", "肉", ""),
+            ContentCard("挽肉", "", "肉", ""),
+            ContentCard("ステーキ用フィレステーキ", "", "肉", ""),
+            ContentCard("牛乳", "", "乳製品", ""),
+            ContentCard("チェダーチーズ", "", "乳製品", ""),
+            ContentCard("カマンベールチーズ", "", "乳製品", ""),
+            ContentCard("ラクレット", "", "乳製品", ""),
+            ContentCard("鯵", "", "魚", ""),
+            ContentCard("秋刀魚", "", "魚", ""),
+            ContentCard("鮭", "", "魚", ""),
+            ContentCard("浅利", "", "魚", ""),
         )
     )
     val event = IngredientAdditionScreenEvent(

@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.aoi.presentation.home.ingredient_addition.IngredientAddition
 import com.aoi.presentation.home.ingredient_detail.IngredientDetailUI
 
@@ -60,18 +62,22 @@ fun IngredientAdditionNavHost(
             currentRoute = "ingredient_view"
             IngredientAddition(
                 onNavigateForAddIngredient = { navController.navigate("ingredient_view") },
-                onNavigateForIngredientDetail = { navController.navigate("ingredient_detail"){
-                    popUpTo("ingredient_view") { inclusive = false }
-                } }
+                onNavigateForIngredientDetail = { selectedIngredientId ->
+                    navController.navigate("ingredient_detail/$selectedIngredientId") {
+                        popUpTo("ingredient_view") { inclusive = false }
+                    }
+                }
             )
         }
         composable(
-            "ingredient_detail",
+            "ingredient_detail/{ingredientId}",
+            arguments = listOf(navArgument("ingredientId") { type = NavType.StringType }),
             enterTransition = { slideInScreenEnterTransition },
             exitTransition = { slideOutScreenExitTransition }
-        ) {
+        ) { backStackEntry ->
             currentRoute = "ingredient_detail"
-            IngredientDetailUI()
+            val ingredientId = backStackEntry.arguments?.getString("ingredientId")
+            IngredientDetailUI(ingredientId = ingredientId!!)
         }
     }
 }
