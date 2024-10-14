@@ -44,8 +44,6 @@ import java.util.Calendar
 
 /**
  * 食材詳細画面
- *
- * @param vm ViewModel
  */
 @Composable
 fun IngredientDetailUI(
