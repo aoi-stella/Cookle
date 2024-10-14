@@ -1,11 +1,12 @@
 package com.aoi.data.repository.navigation_items
 
 import com.aoi.utility.entity.domain.NavigationItemDomainEntity
+import javax.inject.Inject
 
 /**
  * ナビゲーションアイテムのリポジトリ
  */
-class NavigationItemsRepository {
+class NavigationItemsRepository @Inject constructor() {
     /**
      * ナビゲーションアイテムを取得する
      *

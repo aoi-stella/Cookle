@@ -8,13 +8,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import com.aoi.domain.usecase.navigation.GetHomeNavigationItemsUseCase
 import com.aoi.utility.entity.ui.NavigationItemUIEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * ホーム画面のViewModel
  */
-class HomeViewModel: ViewModel() {
-    private val getHomeNavigationItemsUseCase = GetHomeNavigationItemsUseCase()
-
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getHomeNavigationItemsUseCase: GetHomeNavigationItemsUseCase
+): ViewModel() {
     /**
      * ナビゲーションアイテムを取得する
      */
