@@ -1,9 +1,11 @@
 package com.aoi.data.repository.ingredient_category
 
+import javax.inject.Inject
+
 /**
  * 食材カテゴリリスト操作用リポジトリ
  */
-class IngredientCategoryRepository {
+class IngredientCategoryRepository @Inject constructor() {
     /**
      * 食材カテゴリリストを取得する
      *

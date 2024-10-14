@@ -36,7 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aoi.presentation.R
 
 /**
@@ -50,7 +50,7 @@ import com.aoi.presentation.R
 fun BulkIngredientUI(
     onNavigateForIngredientDetail: () -> Unit,
     onNavigateForAddIngredient: () -> Unit,
-    vm: BulkIngredientViewModel = viewModel()
+    vm: BulkIngredientViewModel = hiltViewModel()
 ) {
     val selectedCategory = vm.selectedCategory.collectAsState()
     val categoryList = vm.categoryList.collectAsState()

@@ -2,14 +2,17 @@ package com.aoi.presentation.home.ingredient_bulk
 
 import androidx.lifecycle.ViewModel
 import com.aoi.domain.usecase.ingredient_category.GetIngredientCategoryUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 /**
  * 食材一括管理画面のViewModel
  */
-class BulkIngredientViewModel(
-    private val getIngredientCategoryUseCase: GetIngredientCategoryUseCase = GetIngredientCategoryUseCase()
+@HiltViewModel
+class BulkIngredientViewModel @Inject constructor(
+    private val getIngredientCategoryUseCase: GetIngredientCategoryUseCase
 ): ViewModel() {
 
     // 選択されたカテゴリ
