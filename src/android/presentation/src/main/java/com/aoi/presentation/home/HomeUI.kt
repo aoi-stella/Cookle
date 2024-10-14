@@ -13,15 +13,7 @@ import com.aoi.utility.ui.bottom_navigator.CookleBottomNavigationBar
  * ホーム画面の内容
  */
 @Composable
-fun HomeUI(onNavigate: () -> Unit, vm: HomeViewModel = hiltViewModel()) {
-    HomeSetup(vm)
-}
-
-/**
- * ホーム画面のセットアップ
- */
-@Composable
-fun HomeSetup(vm: HomeViewModel) {
+fun HomeUI(vm: HomeViewModel = hiltViewModel()) {
     val navigationItems = vm.getNavigationItems()
     val bottomNavController = rememberNavController()
     Scaffold(

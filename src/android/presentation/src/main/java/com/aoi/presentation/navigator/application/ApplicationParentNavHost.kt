@@ -78,8 +78,7 @@ fun ApplicationParentNavHost(
             enterTransition = { commonEnterTransition },
             exitTransition = { commonExitTransition }
         ) {
-            //TODO: 遷移先を記述すること
-            HomeUI({})
+            HomeUI()
         }
     }
 }
