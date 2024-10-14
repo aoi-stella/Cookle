@@ -116,7 +116,7 @@ fun ContentRow(contentKind: String,
                contentsList: List<ContentCard>,
                onClickContentCard: () -> Unit
 ) {
-    val displayContentsList = contentsList.filter { it.type == contentKind }
+    val displayContentsList = contentsList.filter { it.category == contentKind }
     if(displayContentsList.isNotEmpty()){
         LazyRow(
             modifier =Modifier
@@ -125,7 +125,7 @@ fun ContentRow(contentKind: String,
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             items(contentsList.size) { index ->
-                if(contentsList[index].type == contentKind) {
+                if(contentsList[index].category == contentKind) {
                     ContentCard(contentsList[index], onClickContentCard)
                 }
             }
